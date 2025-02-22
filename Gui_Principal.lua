@@ -17,7 +17,7 @@ local function criarGUI()
         BackgroundColor3 = Color3.fromRGB(0, 255, 0),
         BorderSizePixel = 0,
         Position = UDim2.new(0.5, -50, 0.5, -35),
-        Size = UDim2.new(0, 100, 0, 70),
+        Size = UDim2.new(0, 600, 0, 500),
         Name = "ConfiguracoesFrame"
     })
 
