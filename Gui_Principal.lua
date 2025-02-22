@@ -18,7 +18,6 @@ local function criarGUI()
         BorderSizePixel = 0,
         Position = UDim2.new(0.5, -50, 0.5, -35),
         Size = UDim2.new(0, 100, 0, 70),
-        CornerRadius = UDim.new(0, 10),
         Name = "ConfiguracoesFrame"
     })
 
