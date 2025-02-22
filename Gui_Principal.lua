@@ -27,7 +27,7 @@ local function criarGUI()
         BackgroundTransparency = 1,
         Size = UDim2.new(0, 20, 0, 20),
         Position = UDim2.new(0.5, 70, 0.5, -35),
-        Image = "SEU_LINK_DA_IMAGEM_AQUI", -- Substitua pelo link da sua imagem
+        Image = "https://storage.oberonhosting.com.br/media/bdeacf7aa05f0123.jpg", -- Substitua pelo link da sua imagem
         Draggable = true,
         Name = "BotaoImagem",
         BackgroundColor3 = Color3.fromRGB(255, 0, 0)
