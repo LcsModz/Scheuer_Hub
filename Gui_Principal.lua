@@ -1,6 +1,9 @@
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
 
+local ButtonScreenGui = Instance.new("ScreenGui") -- Nova ScreenGui para o botão
+ButtonScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
+
 local function criarElemento(tipo, propriedades) 
     local elemento = Instance.new(tipo)
     for nome, valor in pairs(propriedades) do
@@ -27,12 +30,13 @@ local function criarGUI()
         BorderSizePixel = 0,
         Position = UDim2.new(0, posX, 0, posY),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
+        CornerRadius = UDim.new(0, 10),
         Name = "ConfiguracoesFrame",
     })
 
-    -- Criar o TextButton (Botão Sólido)
+    -- Criar o TextButton (Botão Sólido) - agora em uma ScreenGui separada
     local button = criarElemento("TextButton", {
-        Parent = frame,
+        Parent = ButtonScreenGui, -- Mudança: agora o botão é filho de ButtonScreenGui
         BackgroundTransparency = 0, 
         Size = UDim2.new(0, 20, 0, 20),
         Position = UDim2.new(0.5, 70, 0.5, -35),
@@ -44,13 +48,11 @@ local function criarGUI()
 
     local dragging = false
     local startPos
-    local mousePos
 
     frame.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 then
             dragging = true
             startPos = frame.Position
-            mousePos = input.Position
         end
     end)
 
@@ -62,9 +64,8 @@ local function criarGUI()
 
     game:GetService("UserInputService").InputChanged:Connect(function(input, gameProcessedEvent)
         if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-            local delta = input.Position - mousePos
+            local delta = input.Position
             frame.Position = UDim2.new(0, startPos.X.Offset + delta.X, 0, startPos.Y.Offset + delta.Y)
-            mousePos = input.Position
         end
     end)
 
