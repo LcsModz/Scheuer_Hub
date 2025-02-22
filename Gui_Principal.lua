@@ -18,7 +18,7 @@ local function criarGUI()
     local larguraGUI = telaX * 0.75
     local alturaGUI = telaY * 0.75
     local posX = (telaX - larguraGUI) / 2
-    local posY = 180
+    local posY = (telaY - alturaGUI) / 2 -- Centralizando verticalmente
 
     -- Criar o Frame (Caixa Verde)
     local frame = criarElemento("Frame", {
@@ -28,39 +28,43 @@ local function criarGUI()
         Position = UDim2.new(0, posX, 0, posY),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
         Name = "ConfiguracoesFrame",
-        Draggable = true -- Adicionando Draggable aqui
     })
 
-    -- Criar o ImageButton (Botão Sólido)
+    -- Criar o TextButton (Botão Sólido)
     local button = criarElemento("TextButton", {
         Parent = frame,
-        BackgroundTransparency = 0, -- Tornando o botão sólido
+        BackgroundTransparency = 0, 
         Size = UDim2.new(0, 20, 0, 20),
         Position = UDim2.new(0.5, 70, 0.5, -35),
-        Text = "", -- Removendo o texto
-        Draggable = true, -- Adicionando Draggable aqui
+        Text = "", 
+        Draggable = true, 
         Name = "BotaoImagem",
         BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     })
 
-    -- Adicionando evento para arrastar a GUI (opcional, mas recomendado)
     local dragging = false
     local startPos
+    local mousePos
+
     frame.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 then
             dragging = true
             startPos = frame.Position
+            mousePos = input.Position
         end
     end)
+
     frame.InputEnded:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 then
             dragging = false
         end
     end)
+
     game:GetService("UserInputService").InputChanged:Connect(function(input, gameProcessedEvent)
         if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-            local delta = input.Position - input.Position
-            frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+            local delta = input.Position - mousePos
+            frame.Position = UDim2.new(0, startPos.X.Offset + delta.X, 0, startPos.Y.Offset + delta.Y)
+            mousePos = input.Position
         end
     end)
 
