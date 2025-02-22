@@ -1,8 +1,10 @@
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
+local ScreenGuiPrincipal = Instance.new("ScreenGui")
+ScreenGuiPrincipal.Name = "GUI_Principal"
+ScreenGuiPrincipal.Parent = game.Players.LocalPlayer.PlayerGui
 
-local ButtonScreenGui = Instance.new("ScreenGui") -- Nova ScreenGui para o botão
-ButtonScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
+local ScreenGuiBotao = Instance.new("ScreenGui")
+ScreenGuiBotao.Name = "GUI_Botao"
+ScreenGuiBotao.Parent = game.Players.LocalPlayer.PlayerGui
 
 local function criarElemento(tipo, propriedades) 
     local elemento = Instance.new(tipo)
@@ -25,7 +27,7 @@ local function criarGUI()
 
     -- Criar o Frame (Caixa Verde)
     local frame = criarElemento("Frame", {
-        Parent = ScreenGui,
+        Parent = ScreenGuiPrincipal, 
         BackgroundColor3 = Color3.fromRGB(0, 255, 0),
         BorderSizePixel = 0,
         Position = UDim2.new(0, posX, 0, posY),
@@ -34,9 +36,9 @@ local function criarGUI()
         Name = "ConfiguracoesFrame",
     })
 
-    -- Criar o TextButton (Botão Sólido) - agora em uma ScreenGui separada
+    -- Criar o TextButton (Botão Sólido) - em uma ScreenGui separada
     local button = criarElemento("TextButton", {
-        Parent = ButtonScreenGui, -- Mudança: agora o botão é filho de ButtonScreenGui
+        Parent = ScreenGuiBotao, 
         BackgroundTransparency = 0, 
         Size = UDim2.new(0, 20, 0, 20),
         Position = UDim2.new(0.5, 70, 0.5, -35),
