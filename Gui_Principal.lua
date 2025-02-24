@@ -1,11 +1,11 @@
 local ScreenGuiPrincipal = Instance.new("ScreenGui")
 ScreenGuiPrincipal.Name = "GUI_Principal"
-ScreenGuiPrincipal.Parent = game.Players.LocalPlayer.PlayerGui
+-- ADICIONE ESTA LINHA: ScreenGuiPrincipal.Parent = game.Players.LocalPlayer.PlayerGui
 ScreenGuiPrincipal.Enabled = false
 
 local ScreenGuiBotao = Instance.new("ScreenGui")
 ScreenGuiBotao.Name = "GUI_Botao"
-ScreenGuiBotao.Parent = game.Players.LocalPlayer.PlayerGui
+-- ADICIONE ESTA LINHA: ScreenGuiBotao.Parent = game.Players.LocalPlayer.PlayerGui
 
 local TweenService = game:GetService("TweenService")
 
@@ -31,10 +31,16 @@ local criarGUI
 -- Função principal para criar a GUI
 criarGUI = function()
     -- Obter o tamanho da tela do jogador
-    local player = game.Players.LocalPlayer
+    local player = game:GetService("Players").LocalPlayer -- Use game:GetService("Players")
     if not player then
         warn("Player não encontrado")
         return
+    end
+    -- ADICIONE ESTE BLOCO DE CÓDIGO:
+    -- Garantir que o jogador e o personagem estejam totalmente carregados
+    if not player or not player.Character then
+        player = game:GetService("Players").PlayerAdded:Wait()
+        player.CharacterAdded:Wait()
     end
     local playerGui = player.PlayerGui
     if not playerGui then
@@ -42,8 +48,16 @@ criarGUI = function()
         return
     end
 
-    local telaX = playerGui.ScreenGui.AbsoluteSize.X
-    local telaY = playerGui.ScreenGui.AbsoluteSize.Y
+    -- ADICIONE ESTE BLOCO DE CÓDIGO:
+    -- Usar WaitForChild para garantir que ScreenGui esteja carregado
+    local screenGui = playerGui:WaitForChild("ScreenGui")
+    if not screenGui then
+        warn("ScreenGui não encontrado!")
+        return
+    end
+
+    local telaX = screenGui.AbsoluteSize.X -- Use screenGui em vez de playerGui.ScreenGui
+    local telaY = screenGui.AbsoluteSize.Y
 
     -- Calcular o tamanho e a posição da GUI
     local larguraGUI = telaX * 0.75
@@ -104,7 +118,7 @@ criarGUI = function()
     -- Criar o Frame (Caixa Principal)
     local frame = criarElemento("Frame", {
         Parent = ScreenGuiPrincipal,
-        BackgroundColor3 = Color3.fromRGB(30, 30, 30),
+BackgroundColor3 = Color3.fromRGB(30, 30, 30),
         BorderSizePixel = 0,
         Position = UDim2.new(0, posX, 0, posY),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
@@ -117,12 +131,13 @@ criarGUI = function()
     local menuLateral = criarElemento("Frame", {
         Parent = frame,
         BackgroundColor3 = Color3.fromRGB(50, 50, 50),
-        BorderSizePixel = 0,
-	Position = UDim2.new(0, 0, 0, 0),
+        BorderSizePixel = 0,
+	    Position = UDim2.new(0, 0, 0, 0),
         Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
     })
 	if not menuLateral then return end
+
 
     -- Criar o ScrollingFrame
     local scrollingFrame = criarElemento("ScrollingFrame", {
