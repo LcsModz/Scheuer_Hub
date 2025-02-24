@@ -8,16 +8,24 @@ ScreenGuiBotao.Parent = game.Players.LocalPlayer.PlayerGui
 
 local function criarElemento(tipo, propriedades)
     local elemento = Instance.new(tipo)
-    for nome, valor in pairs(propriedades) do
-        elemento[nome] = valor
+    if propriedades then
+        for nome, valor in pairs(propriedades) do
+            elemento[nome] = valor
+        end
     end
     return elemento
 end
 
 local function criarGUI()
     -- Obter o tamanho da tela do jogador
-    local telaX = game.Players.LocalPlayer.PlayerGui.ScreenGui.AbsoluteSize.X
-    local telaY = game.Players.LocalPlayer.PlayerGui.ScreenGui.AbsoluteSize.Y
+    local player = game.Players.LocalPlayer
+    if not player or not player.PlayerGui then
+        warn("Player or PlayerGui not found")
+        return
+    end
+
+    local telaX = player.PlayerGui.ScreenGui.AbsoluteSize.X
+    local telaY = player.PlayerGui.ScreenGui.AbsoluteSize.Y
 
     -- Calcular o tamanho e a posição da GUI
     local larguraGUI = telaX * 0.75
@@ -67,7 +75,7 @@ local function criarGUI()
         {nome = "Raid", icone = "rbxassetid://0"},
         {nome = "Teleport", icone = "rbxassetid://0"},
         {nome = "Config", icone = "rbxassetid://0"},
-	    {nome = "Server Hop", icone = "rbxassetid://0"}
+        {nome = "Server Hop", icone = "rbxassetid://0"}
     }
 
     local alturaOpcao = 1 / #opcoes
@@ -92,8 +100,8 @@ local function criarGUI()
     -- Criar o TextButton (Botão Sólido)
     local button = criarElemento("TextButton", {
         Parent = ScreenGuiBotao,
-        BackgroundTransparency = 0,
-        Size = UDim2.new(0, 20, 0, 20),
+	BackgroundTransparency = 0,
+        Size = UDim2.new(0, 20, 0, 20),
         Position = UDim2.new(0, frame.Position.X.Offset - 25, 0.5, -10), -- Posicionado à esquerda da GUI principal
         Text = "",
         Draggable = true,
