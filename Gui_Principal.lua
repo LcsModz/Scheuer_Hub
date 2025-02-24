@@ -44,7 +44,7 @@ local function criarGUI()
         Position = UDim2.new(0, 0, 0, 0),
         Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
-        CanvasSize = UDim2.new(1, 0, 1, 0), -- Tamanho inicial do canvas
+        CanvasSize = UDim2.new(1, 0, 0, 0), -- Tamanho inicial do canvas
         ScrollBarThickness = 6, -- Espessura da barra de rolagem
     })
 
