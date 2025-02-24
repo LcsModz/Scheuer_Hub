@@ -42,13 +42,15 @@ local function criarGUI()
         Size = UDim2.new(0, 20, 0, 20),
         Position = UDim2.new(0.5, 70, 0.5, -35),
         Text = "", 
+        Draggable = true,
         Name = "BotaoImagem",
         BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     })
 
-    local function arrastarElemento(elemento, mouseOffset) 
+    local function arrastarElemento(elemento)
         local dragging = false
         local startPos
+        local mouseOffset
         local mouse = game.Players.LocalPlayer:GetMouse()
 
         elemento.InputBegan:Connect(function(input)
@@ -72,8 +74,8 @@ local function criarGUI()
         end)
     end
 
-arrastarElemento(frame, nil)
-arrastarElemento(button, nil)
+    arrastarElemento(frame)
+    arrastarElemento(button)
 end
 
 -- Chamar a função para criar a GUI
