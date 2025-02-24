@@ -2,6 +2,10 @@ local ScreenGuiPrincipal = Instance.new("ScreenGui")
 ScreenGuiPrincipal.Name = "GUI_Principal"
 ScreenGuiPrincipal.Parent = game.Players.LocalPlayer.PlayerGui
 
+local ScreenGuiBotao = Instance.new("ScreenGui")
+ScreenGuiBotao.Name = "GUI_Botao"
+ScreenGuiBotao.Parent = game.Players.LocalPlayer.PlayerGui
+
 local function criarElemento(tipo, propriedades)
     local elemento = Instance.new(tipo)
     for nome, valor in pairs(propriedades) do
@@ -50,21 +54,36 @@ local function criarGUI()
         {nome = "WorldTab", icone = "rbxassetid://0"}
     }
 
-    local alturaOpcao = menuLateral.Size.Y.Offset / #opcoes
+    local alturaOpcao = 1 / #opcoes
+    local espacamento = 0.02 -- Espaçamento entre os botões
     for i, opcao in ipairs(opcoes) do
         local botao = criarElemento("TextButton", {
             Parent = menuLateral,
             BackgroundColor3 = Color3.fromRGB(70, 70, 70),
             BorderSizePixel = 0,
-            Position = UDim2.new(0, 0, 0, alturaOpcao * (i - 1)),
-            Size = UDim2.new(1, 0, 0, alturaOpcao),
+            Position = UDim2.new(0, 0, alturaOpcao * (i - 1) + espacamento * (i - 1), 0),
+            Size = UDim2.new(1, 0, alturaOpcao - espacamento, 0),
             Font = Enum.Font.SourceSansBold,
             TextColor3 = Color3.fromRGB(255, 255, 255),
             TextSize = 14,
             Text = opcao.nome,
             Name = "Opcao" .. opcao.nome,
+            TextXAlignment = Enum.TextXAlignment.Left, -- Alinhar o texto à esquerda
+            --Image = opcao.icone -- Adicionar imagem do ícone (se tiver)
         })
     end
+
+    -- Criar o TextButton (Botão Sólido)
+    local button = criarElemento("TextButton", {
+        Parent = ScreenGuiBotao,
+        BackgroundTransparency = 0,
+        Size = UDim2.new(0, 20, 0, 20),
+        Position = UDim2.new(0, frame.Position.X.Offset - 25, 0.5, -10), -- Posicionado à esquerda da GUI principal
+        Text = "",
+        Draggable = true,
+        Name = "BotaoImagem",
+        BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    })
 
     local function arrastarElemento(elemento)
         local dragging = false
@@ -74,7 +93,7 @@ local function criarGUI()
 
         elemento.InputBegan:Connect(function(input)
             if input.UserInputType == Enum.UserInputType.MouseButton1 then
-                dragging = true
+dragging = true
                 startPos = elemento.Position
                 mouseOffset = Vector2.new(mouse.X - elemento.AbsolutePosition.X, mouse.Y - elemento.AbsolutePosition.Y)
             end
@@ -94,5 +113,7 @@ local function criarGUI()
     end
 
     arrastarElemento(frame)
+    arrastarElemento(button)
 end
+
 criarGUI()
