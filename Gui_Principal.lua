@@ -50,12 +50,14 @@ local function criarGUI()
 
     local dragging = false
     local startPos
+    local mouseOffset -- Deslocamento do mouse em relação ao canto superior esquerdo da GUI
     local mouse = game.Players.LocalPlayer:GetMouse()
 
     frame.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 then
             dragging = true
             startPos = frame.Position
+            mouseOffset = Vector2.new(mouse.X - frame.AbsolutePosition.X, mouse.Y - frame.AbsolutePosition.Y)
         end
     end)
 
@@ -67,7 +69,7 @@ local function criarGUI()
 
     game:GetService("UserInputService").InputChanged:Connect(function(input, gameProcessedEvent)
         if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-            frame.Position = UDim2.new(0, mouse.X - larguraGUI / 2, 0, mouse.Y - alturaGUI / 2)
+            frame.Position = UDim2.new(0, mouse.X - mouseOffset.X, 0, mouse.Y - mouseOffset.Y)
         end
     end)
 
