@@ -37,13 +37,15 @@ local function criarGUI()
 
     -- Criar o Frame (Menu Lateral)
     local menuLateralLargura = larguraGUI * 0.2 -- 20% da largura da GUI
-    local menuLateral = criarElemento("Frame", {
+    local menuLateral = criarElemento("ScrollingFrame", { -- Alterado para ScrollingFrame
         Parent = frame,
         BackgroundColor3 = Color3.fromRGB(50, 50, 50), -- Tom de cinza mais escuro
         BorderSizePixel = 0,
         Position = UDim2.new(0, 0, 0, 0),
         Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
+        CanvasSize = UDim2.new(1, 0, 0, 0), -- Tamanho inicial do canvas
+        ScrollBarThickness = 6, -- Espessura da barra de rolagem
     })
 
     -- Opções do Menu Lateral
@@ -58,15 +60,18 @@ local function criarGUI()
         {nome = "Server Hop", icone = "rbxassetid://0"} -- Nova opção adicionada
     }
 
-    local alturaOpcao = 1 / #opcoes
+    local alturaOpcao = 0.08 -- Altura fixa para cada opção
     local espacamento = 0.02 -- Espaçamento entre os botões
+    local alturaTotal = #opcoes * alturaOpcao + (#opcoes - 1) * espacamento -- Altura total das opções
+    menuLateral.CanvasSize = UDim2.new(1, 0, 0, alturaTotal) -- Ajusta o tamanho do canvas
+
     for i, opcao in ipairs(opcoes) do
         local botao = criarElemento("TextButton", {
             Parent = menuLateral,
             BackgroundColor3 = Color3.fromRGB(70, 70, 70),
             BorderSizePixel = 0,
-            Position = UDim2.new(0, 0, alturaOpcao * (i - 1) + espacamento * (i - 1), 0),
-            Size = UDim2.new(1, 0, alturaOpcao - espacamento, 0),
+            Position = UDim2.new(0, 0, (alturaOpcao + espacamento) * (i - 1), 0),
+            Size = UDim2.new(1, 0, alturaOpcao, 0),
             Font = Enum.Font.SourceSansBold,
             TextColor3 = Color3.fromRGB(255, 255, 255),
             TextSize = 14,
