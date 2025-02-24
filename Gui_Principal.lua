@@ -32,7 +32,6 @@ local function criarGUI()
         BorderSizePixel = 0,
         Position = UDim2.new(0, posX, 0, posY),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
-        CornerRadius = UDim.new(0, 10), -- Cantos arredondados adicionados
         Name = "ConfiguracoesFrame",
     })
 
