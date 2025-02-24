@@ -48,14 +48,14 @@ local function criarGUI()
 
     -- Opções do Menu Lateral
     local opcoes = {
-        {nome = "Créditos", icone = "rbxassetid://0"}, -- Substituir "rbxassetid://0" pelo ID do ícone
-        {nome = "Main", icone = "rbxassetid://0"},
-        {nome = "Farm", icone = "rbxassetid://0"},
-        {nome = "V4", icone = "rbxassetid://0"},
-        {nome = "Raid", icone = "rbxassetid://0"},
-        {nome = "Teleport", icone = "rbxassetid://0"},
-        {nome = "Config", icone = "rbxassetid://0"},
-	    {nome = "Server Hop", icone = "rbxassetid://0"}
+        {nome = "Créditos", icone = "rbxassetid://7093195125"}, -- Substituir "rbxassetid://0" pelo ID do ícone
+        {nome = "Main", icone = "rbxassetid://7093195125"},
+        {nome = "Farm", icone = "rbxassetid://7093195125"},
+        {nome = "V4", icone = "rbxassetid://7093195125"},
+        {nome = "Raid", icone = "rbxassetid://7093195125"},
+        {nome = "Teleport", icone = "rbxassetid://7093195125"},
+        {nome = "Config", icone = "rbxassetid://7093195125"},
+	    {nome = "Server Hop", icone = "rbxassetid://7093195125"}
     }
 
     local alturaOpcao = 1 / #opcoes
