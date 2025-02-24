@@ -54,8 +54,7 @@ local function criarGUI()
         {nome = "V4"},
         {nome = "Raid"},
         {nome = "Teleport"},
-        {nome = "Config"},
-        {nome = "Server Hop"}
+        {nome = "Config"}
     }
 
     local alturaOpcao = 1 / #opcoes
