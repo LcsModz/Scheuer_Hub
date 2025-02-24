@@ -1,12 +1,12 @@
 local ScreenGuiPrincipal = Instance.new("ScreenGui")
 ScreenGuiPrincipal.Name = "GUI_Principal"
-ScreenGuiPrincipal.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui") -- ADICIONE ESTA LINHA: Parent para PlayerGui e use WaitForChild
+ScreenGuiPrincipal.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
 
 ScreenGuiPrincipal.Enabled = false
 
 local ScreenGuiBotao = Instance.new("ScreenGui")
 ScreenGuiBotao.Name = "GUI_Botao"
-ScreenGuiBotao.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui") -- ADICIONE ESTA LINHA: Parent para PlayerGui e use WaitForChild
+ScreenGuiBotao.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
 
 
 local TweenService = game:GetService("TweenService")
