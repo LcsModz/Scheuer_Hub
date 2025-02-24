@@ -1,10 +1,13 @@
 local ScreenGuiPrincipal = Instance.new("ScreenGui")
 ScreenGuiPrincipal.Name = "GUI_Principal"
 ScreenGuiPrincipal.Parent = game.Players.LocalPlayer.PlayerGui
+ScreenGuiPrincipal.Enabled = false -- Desabilitar inicialmente
 
 local ScreenGuiBotao = Instance.new("ScreenGui")
 ScreenGuiBotao.Name = "GUI_Botao"
 ScreenGuiBotao.Parent = game.Players.LocalPlayer.PlayerGui
+
+local TweenService = game:GetService("TweenService")
 
 local function criarElemento(tipo, propriedades)
     local elemento = Instance.new(tipo)
@@ -33,6 +36,51 @@ local function criarGUI()
     local posX = (telaX - larguraGUI) / 2
     local posY = (telaY - alturaGUI) / 2 -- Centralizando verticalmente
 
+    -- Criar a GUI de Carregamento
+    local loadingGui = criarElemento("ScreenGui", {
+        Name = "LoadingGui",
+        Parent = player.PlayerGui,
+    })
+
+    local loadingFrame = criarElemento("Frame", {
+        Parent = loadingGui,
+        BackgroundColor3 = Color3.fromRGB(30, 30, 30),
+        BorderSizePixel = 0,
+        Size = UDim2.new(0.5, 0, 0.3, 0),
+        Position = UDim2.new(0.25, 0, 0.35, 0),
+    })
+
+    local loadingText = criarElemento("TextLabel", {
+        Parent = loadingFrame,
+        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+		BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Size = UDim2.new(1, 0, 0.3, 0),
+        Position = UDim2.new(0, 0, 0, 0),
+        Font = Enum.Font.SourceSansBold,
+        TextColor3 = Color3.fromRGB(255, 255, 255),
+        TextSize = 20,
+        Text = "Carregando...",
+        TextScaled = true,
+        TextXAlignment = Enum.TextXAlignment.Center,
+    })
+
+    local progressBarBackground = criarElemento("Frame", {
+        Parent = loadingFrame,
+        BackgroundColor3 = Color3.fromRGB(50, 50, 50),
+        BorderSizePixel = 0,
+        Size = UDim2.new(0.9, 0, 0.3, 0),
+        Position = UDim2.new(0.05, 0, 0.5, 0),
+    })
+
+    local progressBar = criarElemento("Frame", {
+        Parent = progressBarBackground,
+        BackgroundColor3 = Color3.fromRGB(0, 200, 0),
+        BorderSizePixel = 0,
+        Size = UDim2.new(0, 0, 1, 0),
+        Position = UDim2.new(0, 0, 0, 0),
+    })
+
     -- Criar o Frame (Caixa Principal)
     local frame = criarElemento("Frame", {
         Parent = ScreenGuiPrincipal,
@@ -41,6 +89,7 @@ local function criarGUI()
         Position = UDim2.new(0, posX, 0, posY),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
         Name = "ConfiguracoesFrame",
+        --Transparency = 1, -- Inicialmente transparente
     })
 
     -- Criar o Frame (Menu Lateral)
@@ -53,8 +102,7 @@ local function criarGUI()
         Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
     })
-
-    -- Criar o ScrollingFrame (Tela de Rolagem)
+ScrollingFrame (Tela de Rolagem)
     local scrollingFrame = criarElemento("ScrollingFrame", {
         Parent = menuLateral,
         BackgroundColor3 = Color3.fromRGB(50, 50, 50), -- Tom de cinza mais escuro
@@ -100,7 +148,7 @@ local function criarGUI()
     -- Criar o TextButton (Botão Sólido)
     local button = criarElemento("TextButton", {
         Parent = ScreenGuiBotao,
-	BackgroundTransparency = 0,
+        BackgroundTransparency = 0,
         Size = UDim2.new(0, 20, 0, 20),
         Position = UDim2.new(0, frame.Position.X.Offset - 25, 0.5, -10), -- Posicionado à esquerda da GUI principal
         Text = "",
@@ -138,6 +186,42 @@ local function criarGUI()
 
     arrastarElemento(frame)
     arrastarElemento(button)
+
+    -- Animação de Carregamento
+    local function animateLoading(duration)
+        for i = 0, 100 do
+            wait(duration / 100)
+            progressBar:TweenSize(
+                UDim2.new(i / 100, 0, 1, 0),
+                Enum.EasingDirection.Out,
+                Enum.EasingStyle.Quad,
+                0.1,
+                true
+            )
+        end
+    end
+
+    -- Animação de Esmaecimento
+    local function fadeIn(gui, duration)
+        gui.Enabled = true
+        local tweenInfo = TweenInfo.new(
+            duration,
+            Enum.EasingStyle.Quad,
+            Enum.EasingDirection.Out,
+            0,
+            false,
+            0
+        )
+local tween = TweenService:Create(frame, tweenInfo, {Transparency = 0})
+        tween:Play()
+    end
+
+    -- Sequência de Carregamento e Abertura
+    loadingGui.Enabled = true
+    animateLoading(2) -- 2 segundos de carregamento
+    loadingGui:Destroy()
+    ScreenGuiPrincipal.Enabled = true
+    --fadeIn(ScreenGuiPrincipal, 1) -- 1 segundo de esmaecimento
 end
 
 -- Chamar a função para criar a GUI
