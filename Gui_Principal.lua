@@ -2,10 +2,6 @@ local ScreenGuiPrincipal = Instance.new("ScreenGui")
 ScreenGuiPrincipal.Name = "GUI_Principal"
 ScreenGuiPrincipal.Parent = game.Players.LocalPlayer.PlayerGui
 
-local ScreenGuiBotao = Instance.new("ScreenGui")
-ScreenGuiBotao.Name = "GUI_Botao"
-ScreenGuiBotao.Parent = game.Players.LocalPlayer.PlayerGui
-
 local function criarElemento(tipo, propriedades)
     local elemento = Instance.new(tipo)
     for nome, valor in pairs(propriedades) do
@@ -25,59 +21,49 @@ local function criarGUI()
     local posX = (telaX - larguraGUI) / 2
     local posY = (telaY - alturaGUI) / 2 -- Centralizando verticalmente
 
-    -- Criar o Frame (Caixa Verde)
+    -- Criar o Frame (Caixa Principal)
     local frame = criarElemento("Frame", {
         Parent = ScreenGuiPrincipal,
-        BackgroundColor3 = Color3.fromRGB(200, 200, 200), -- Tons de cinza
+        BackgroundColor3 = Color3.fromRGB(30, 30, 30), -- Fundo escuro
         BorderSizePixel = 0,
         Position = UDim2.new(0, posX, 0, posY),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
         Name = "ConfiguracoesFrame",
-        BackgroundTransparency = 1, -- Inicialmente transparente para a animação
     })
 
-    -- Animação de fade-in
-    local tweenService = game:GetService("TweenService")
-    local tweenInfo = TweenInfo.new(
-        1, -- Duração da animação em segundos
-        Enum.EasingStyle.Quad, -- Estilo de animação
-        Enum.EasingDirection.Out, -- Direção da animação
-        0, -- Número de repetições (0 para uma vez)
-        false, -- Reverter ao final?
-        0 -- Atraso (em segundos)
-    )
-
-    local tween = tweenService:Create(frame, tweenInfo, {BackgroundTransparency = 0})
-    tween:Play()
-
-    -- Criar o TextButton (Botão Sólido) - em uma ScreenGui separada
-    local button = criarElemento("TextButton", {
-        Parent = ScreenGuiBotao,
-        BackgroundTransparency = 0,
-        Size = UDim2.new(0, 20, 0, 20),
-        Position = UDim2.new(0, 50, 0.5, -35), -- Lado esquerdo com 50 pixels de distância
-        Text = "",
-        Draggable = true,
-        Name = "BotaoImagem",
-        BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    -- Criar o Frame (Menu Lateral)
+    local menuLateralLargura = larguraGUI * 0.2 -- 20% da largura da GUI
+    local menuLateral = criarElemento("Frame", {
+        Parent = frame,
+        BackgroundColor3 = Color3.fromRGB(50, 50, 50), -- Tom de cinza mais escuro
+        BorderSizePixel = 0,
+        Position = UDim2.new(0, 0, 0, 0),
+        Size = UDim2.new(0, menuLateralLargura, 1, 0),
+        Name = "MenuLateral",
     })
 
-    -- Criar divisórias visuais (frames)
-    local divisorias = {}
-    local numDivisorias = 3
-    local espacamento = larguraGUI / numDivisorias
+    -- Opções do Menu Lateral
+    local opcoes = {
+        {nome = "Home", icone = "rbxassetid://0"}, -- Substituir "rbxassetid://0" pelo ID do ícone
+        {nome = "Player", icone = "rbxassetid://0"},
+        {nome = "Teleports", icone = "rbxassetid://0"},
+        {nome = "WorldTab", icone = "rbxassetid://0"}
+    }
 
-    for i = 1, numDivisorias do
-        local divisoria = criarElemento("Frame", {
-            Parent = frame,
-            BackgroundColor3 = Color3.fromRGB(150, 150, 150), -- Tom de cinza mais escuro
+    local alturaOpcao = menuLateral.Size.Y.Offset / #opcoes
+    for i, opcao in ipairs(opcoes) do
+        local botao = criarElemento("TextButton", {
+            Parent = menuLateral,
+            BackgroundColor3 = Color3.fromRGB(70, 70, 70),
             BorderSizePixel = 0,
-            Position = UDim2.new(0, espacamento * (i - 1), 0, 0),
-            Size = UDim2.new(0, 2, 1, alturaGUI),
-            Name = "Divisoria" .. i,
-            AnchorPoint = Vector2.new(0, 0)
+            Position = UDim2.new(0, 0, 0, alturaOpcao * (i - 1)),
+            Size = UDim2.new(1, 0, 0, alturaOpcao),
+            Font = Enum.Font.SourceSansBold,
+            TextColor3 = Color3.fromRGB(255, 255, 255),
+            TextSize = 14,
+            Text = opcao.nome,
+            Name = "Opcao" .. opcao.nome,
         })
-        table.insert(divisorias, divisoria)
     end
 
     local function arrastarElemento(elemento)
@@ -96,7 +82,7 @@ local function criarGUI()
 
         elemento.InputEnded:Connect(function(input)
             if input.UserInputType == Enum.UserInputType.MouseButton1 then
-dragging = false
+                dragging = false
             end
         end)
 
@@ -108,8 +94,5 @@ dragging = false
     end
 
     arrastarElemento(frame)
-    arrastarElemento(button)
 end
-
--- Chamar a função para criar a GUI
 criarGUI()
