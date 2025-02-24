@@ -1,7 +1,7 @@
 local ScreenGuiPrincipal = Instance.new("ScreenGui")
 ScreenGuiPrincipal.Name = "GUI_Principal"
 ScreenGuiPrincipal.Parent = game.Players.LocalPlayer.PlayerGui
-ScreenGuiPrincipal.Enabled = false -- Desabilitar inicialmente
+ScreenGuiPrincipal.Enabled = false
 
 local ScreenGuiBotao = Instance.new("ScreenGui")
 ScreenGuiBotao.Name = "GUI_Botao"
@@ -43,7 +43,7 @@ local function criarGUI()
     local larguraGUI = telaX * 0.75
     local alturaGUI = telaY * 0.75
     local posX = (telaX - larguraGUI) / 2
-    local posY = (telaY - alturaGUI) / 2 -- Centralizando verticalmente
+    local posY = (telaY - alturaGUI) / 2
 
     -- Criar a GUI de Carregamento
     local loadingGui = criarElemento("ScreenGui", {
@@ -98,35 +98,34 @@ local function criarGUI()
     -- Criar o Frame (Caixa Principal)
     local frame = criarElemento("Frame", {
         Parent = ScreenGuiPrincipal,
-        BackgroundColor3 = Color3.fromRGB(30, 30, 30), -- Fundo escuro
+        BackgroundColor3 = Color3.fromRGB(30, 30, 30),
         BorderSizePixel = 0,
         Position = UDim2.new(0, posX, 0, posY),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
         Name = "ConfiguracoesFrame",
-        --Transparency = 1, -- Inicialmente transparente
     })
 	if not frame then return end
 
     -- Criar o Frame (Menu Lateral)
-    local menuLateralLargura = larguraGUI * 0.2 -- 20% da largura da GUI
+    local menuLateralLargura = larguraGUI * 0.2
     local menuLateral = criarElemento("Frame", {
         Parent = frame,
-        BackgroundColor3 = Color3.fromRGB(50, 50, 50), -- Tom de cinza mais escuro
+        BackgroundColor3 = Color3.fromRGB(50, 50, 50),
         BorderSizePixel = 0,
-        Position = UDim2.new(0, 0, 0, 0),
-Size = UDim2.new(0, menuLateralLargura, 1, 0),
+        Position = UDim2.new(0, 0, 0, 0),
+        Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
     })
 	if not menuLateral then return end
 
-    -- Criar o ScrollingFrame (Tela de Rolagem)
-    local scrollingFrame = criarElemento("ScrollingFrame", {
+    -- Criar o ScrollingFrame
+    local scrollingFrame = criarElemento("ScrollingFrame", {
         Parent = menuLateral,
-        BackgroundColor3 = Color3.fromRGB(50, 50, 50), -- Tom de cinza mais escuro
+        BackgroundColor3 = Color3.fromRGB(50, 50, 50),
         BorderSizePixel = 0,
         Position = UDim2.new(0, 0, 0, 0),
         Size = UDim2.new(1, 0, 1, 0),
-        CanvasSize = UDim2.new(0, 0, 2, 0), -- Ajustar a altura conforme necessário
+        CanvasSize = UDim2.new(0, 0, 2, 0),
         ScrollBarThickness = 12,
         Name = "ScrollingFrameMenu",
     })
@@ -134,7 +133,7 @@ Size = UDim2.new(0, menuLateralLargura, 1, 0),
 
     -- Opções do Menu Lateral
     local opcoes = {
-        {nome = "Créditos", icone = "rbxassetid://0"}, -- Substituir "rbxassetid://0" pelo ID do ícone
+        {nome = "Créditos", icone = "rbxassetid://0"},
         {nome = "Main", icone = "rbxassetid://0"},
         {nome = "Farm", icone = "rbxassetid://0"},
         {nome = "V4", icone = "rbxassetid://0"},
@@ -145,7 +144,7 @@ Size = UDim2.new(0, menuLateralLargura, 1, 0),
     }
 
     local alturaOpcao = 1 / #opcoes
-    local espacamento = 0.02 -- Espaçamento entre os botões
+    local espacamento = 0.02
     for i, opcao in ipairs(opcoes) do
         local botao = criarElemento("TextButton", {
             Parent = scrollingFrame,
@@ -158,10 +157,9 @@ Size = UDim2.new(0, menuLateralLargura, 1, 0),
             TextSize = 14,
             Text = opcao.nome,
             Name = "Opcao" .. opcao.nome,
-            TextXAlignment = Enum.TextXAlignment.Left, -- Alinhar o texto à esquerda
-            --Image = opcao.icone -- Adicionar imagem do ícone (se tiver)
+            TextXAlignment = Enum.TextXAlignment.Left,
         })
-		if not botao then warn("Erro ao criar botão " .. opcao.nome) return end
+		if not botao then return end
     end
 
     -- Criar o TextButton (Botão Sólido)
@@ -169,7 +167,7 @@ Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Parent = ScreenGuiBotao,
         BackgroundTransparency = 0,
         Size = UDim2.new(0, 20, 0, 20),
-        Position = UDim2.new(0, frame.Position.X.Offset - 25, 0.5, -10), -- Posicionado à esquerda da GUI principal
+        Position = UDim2.new(0, frame.Position.X.Offset - 25, 0.5, -10),
         Text = "",
         Draggable = true,
         Name = "BotaoImagem",
@@ -207,24 +205,21 @@ Size = UDim2.new(0, menuLateralLargura, 1, 0),
     arrastarElemento(frame)
     arrastarElemento(button)
 
-	-- Animação de carregamento e transição
-	local tempoTotalCarregamento = 5 -- segundos
-	local numPassos = 100
-	local tempoPorPasso = tempoTotalCarregamento / numPassos
-
-	for i = 1, numPassos do
-		wait(tempoPorPasso)
-		progressBar:TweenSize(UDim2.new(i/numPassos, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, tempoPorPasso, true)
-	end
+    -- Animação de Carregamento
+    local tempoCarregamento = 3
+    for i = 1, 100 do
+        wait(tempoCarregamento / 100)
+        progressBar:TweenSize(UDim2.new(i / 100, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, tempoCarregamento / 100, true)
+    end
 
     -- Esmaecer a tela de carregamento
-loadingGui:TweenTransparency(1, Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 1, true)
+    TweenService:Create(loadingGui, TweenInfo.new(1), {BackgroundTransparency = 1}):Play()
     wait(1)
     loadingGui:Destroy()
 
-    -- Mostrar a GUI principal com esmaecimento
+    -- Animando a GUI principal
     ScreenGuiPrincipal.Enabled = true
-    --TweenService:Create(frame, TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Transparency = 0}):Play()
+    --TweenService:Create(frame, TweenInfo.new(1), {Transparency = 0}):Play()
 end
 
 -- Chamar a função para criar a GUI
