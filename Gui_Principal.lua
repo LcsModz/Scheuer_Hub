@@ -1,5 +1,10 @@
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
+local ScreenGuiPrincipal = Instance.new("ScreenGui")
+ScreenGuiPrincipal.Name = "GUI_Principal"
+ScreenGuiPrincipal.Parent = game.Players.LocalPlayer.PlayerGui
+
+local ScreenGuiBotao = Instance.new("ScreenGui")
+ScreenGuiBotao.Name = "GUI_Botao"
+ScreenGuiBotao.Parent = game.Players.LocalPlayer.PlayerGui
 
 local function criarElemento(tipo, propriedades) 
     local elemento = Instance.new(tipo)
@@ -22,18 +27,18 @@ local function criarGUI()
 
     -- Criar o Frame (Caixa Verde)
     local frame = criarElemento("Frame", {
-        Parent = ScreenGui,
+        Parent = ScreenGuiPrincipal, 
         BackgroundColor3 = Color3.fromRGB(0, 255, 0),
         BorderSizePixel = 0,
         Position = UDim2.new(0, posX, 0, posY),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
-        CornerRadius = UDim.new(0, 10),
+        CornerRadius = UDim.new(0, 10), -- Cantos arredondados adicionados
         Name = "ConfiguracoesFrame",
     })
 
-    -- Criar o TextButton (Botão Sólido)
+    -- Criar o TextButton (Botão Sólido) - em uma ScreenGui separada
     local button = criarElemento("TextButton", {
-        Parent = frame,
+        Parent = ScreenGuiBotao, 
         BackgroundTransparency = 0, 
         Size = UDim2.new(0, 20, 0, 20),
         Position = UDim2.new(0.5, 70, 0.5, -35),
@@ -45,13 +50,12 @@ local function criarGUI()
 
     local dragging = false
     local startPos
-    local mousePos
+    local mouse = game.Players.LocalPlayer:GetMouse()
 
     frame.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 then
             dragging = true
             startPos = frame.Position
-            mousePos = input.Position
         end
     end)
 
@@ -63,9 +67,7 @@ local function criarGUI()
 
     game:GetService("UserInputService").InputChanged:Connect(function(input, gameProcessedEvent)
         if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-            local delta = input.Position - mousePos
-            frame.Position = UDim2.new(0, startPos.X.Offset + delta.X, 0, startPos.Y.Offset + delta.Y)
-            mousePos = input.Position
+            frame.Position = UDim2.new(0, mouse.X - larguraGUI / 2, 0, mouse.Y - alturaGUI / 2)
         end
     end)
 
