@@ -46,6 +46,18 @@ local function criarGUI()
         Name = "MenuLateral",
     })
 
+    -- Criar o ScrollingFrame (Tela de Rolagem)
+    local scrollingFrame = criarElemento("ScrollingFrame", {
+        Parent = menuLateral,
+        BackgroundColor3 = Color3.fromRGB(50, 50, 50), -- Tom de cinza mais escuro
+        BorderSizePixel = 0,
+        Position = UDim2.new(0, 0, 0, 0),
+        Size = UDim2.new(1, 0, 1, 0),
+        CanvasSize = UDim2.new(0, 0, 2, 0), -- Ajustar a altura conforme necessário
+        ScrollBarThickness = 12,
+        Name = "ScrollingFrameMenu",
+    })
+
     -- Opções do Menu Lateral
     local opcoes = {
         {nome = "Créditos", icone = "rbxassetid://0"}, -- Substituir "rbxassetid://0" pelo ID do ícone
@@ -62,7 +74,7 @@ local function criarGUI()
     local espacamento = 0.02 -- Espaçamento entre os botões
     for i, opcao in ipairs(opcoes) do
         local botao = criarElemento("TextButton", {
-            Parent = menuLateral,
+            Parent = scrollingFrame,
             BackgroundColor3 = Color3.fromRGB(70, 70, 70),
             BorderSizePixel = 0,
             Position = UDim2.new(0, 0, alturaOpcao * (i - 1) + espacamento * (i - 1), 0),
@@ -81,7 +93,7 @@ local function criarGUI()
     local button = criarElemento("TextButton", {
         Parent = ScreenGuiBotao,
         BackgroundTransparency = 0,
-        Size = UDim2.new(0, 20, 0, 20),
+        Size = UDim2.new(0, 20, 0, 20),
         Position = UDim2.new(0, frame.Position.X.Offset - 25, 0.5, -10), -- Posicionado à esquerda da GUI principal
         Text = "",
         Draggable = true,
@@ -98,7 +110,7 @@ local function criarGUI()
         elemento.InputBegan:Connect(function(input)
             if input.UserInputType == Enum.UserInputType.MouseButton1 then
                 dragging = true
-startPos = elemento.Position
+                startPos = elemento.Position
                 mouseOffset = Vector2.new(mouse.X - elemento.AbsolutePosition.X, mouse.Y - elemento.AbsolutePosition.Y)
             end
         end)
