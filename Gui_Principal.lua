@@ -102,14 +102,15 @@ local function criarGUI()
         Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
     })
-ScrollingFrame (Tela de Rolagem)
+
+    -- Criar o ScrollingFrame (Tela de Rolagem)
     local scrollingFrame = criarElemento("ScrollingFrame", {
         Parent = menuLateral,
         BackgroundColor3 = Color3.fromRGB(50, 50, 50), -- Tom de cinza mais escuro
         BorderSizePixel = 0,
         Position = UDim2.new(0, 0, 0, 0),
-        Size = UDim2.new(1, 0, 1, 0),
-        CanvasSize = UDim2.new(0, 0, 2, 0), -- Ajustar a altura conforme necessário
+        Size = UDim2.new(1, 0, 1, 0),
+	CanvasSize = UDim2.new(0, 0, 2, 0), -- Ajustar a altura conforme necessário
         ScrollBarThickness = 12,
         Name = "ScrollingFrameMenu",
     })
@@ -188,40 +189,42 @@ ScrollingFrame (Tela de Rolagem)
     arrastarElemento(button)
 
     -- Animação de Carregamento
-    local function animateLoading(duration)
-        for i = 0, 100 do
-            wait(duration / 100)
-            progressBar:TweenSize(
-                UDim2.new(i / 100, 0, 1, 0),
-                Enum.EasingDirection.Out,
-                Enum.EasingStyle.Quad,
-                0.1,
-                true
-            )
-        end
-    end
-
-    -- Animação de Esmaecimento
-    local function fadeIn(gui, duration)
-        gui.Enabled = true
+    local function animateLoadingBar()
         local tweenInfo = TweenInfo.new(
-            duration,
-            Enum.EasingStyle.Quad,
-            Enum.EasingDirection.Out,
-            0,
-            false,
-            0
-        )
-local tween = TweenService:Create(frame, tweenInfo, {Transparency = 0})
+            5, -- Duração da animação
+            Enum.EasingStyle.Linear, -- Estilo de animação
+            Enum.EasingDirection.Out, -- Direção da animação
+            0, -- Quantidade de repetições (0 = não repetir)
+            false, -- Inverter (não inverter)
+            0 -- Atraso (sem atraso)
+        )
+
+        local tween = TweenService:Create(progressBar, tweenInfo, {Size = UDim2.new(1, 0, 1, 0)})
+
+        tween.Completed:Connect(function()
+            -- Esmaecer a GUI principal
+            ScreenGuiPrincipal.Enabled = true
+            local tweenInfoFadeIn = TweenInfo.new(
+                1, -- Duração da animação
+                Enum.EasingStyle.Linear, -- Estilo de animação
+                Enum.EasingDirection.Out, -- Direção da animação
+                0, -- Quantidade de repetições (0 = não repetir)
+                false, -- Inverter (não inverter)
+		0 -- Atraso (sem atraso)
+            )
+
+            local tweenFadeIn = TweenService:Create(frame, tweenInfoFadeIn, {Transparency = 0})
+
+            tweenFadeIn:Play()
+
+            -- Remover a GUI de carregamento
+            loadingGui:Destroy()
+        end)
+
         tween:Play()
     end
 
-    -- Sequência de Carregamento e Abertura
-    loadingGui.Enabled = true
-    animateLoading(2) -- 2 segundos de carregamento
-    loadingGui:Destroy()
-    ScreenGuiPrincipal.Enabled = true
-    --fadeIn(ScreenGuiPrincipal, 1) -- 1 segundo de esmaecimento
+    animateLoadingBar()
 end
 
 -- Chamar a função para criar a GUI
