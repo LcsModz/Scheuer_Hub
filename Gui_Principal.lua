@@ -54,8 +54,7 @@ local function criarGUI()
         {nome = "V4", icone = "rbxassetid://0"},
         {nome = "Raid", icone = "rbxassetid://0"},
         {nome = "Teleport", icone = "rbxassetid://0"},
-        {nome = "Config", icone = "rbxassetid://0"},
-	    {nome = "Server Hop", icone = "rbxassetid://0"}
+        {nome = "Config", icone = "rbxassetid://0"}
     }
 
     local alturaOpcao = 1 / #opcoes
@@ -98,8 +97,8 @@ local function criarGUI()
         elemento.InputBegan:Connect(function(input)
             if input.UserInputType == Enum.UserInputType.MouseButton1 then
                 dragging = true
-startPos = elemento.Position
-                mouseOffset = Vector2.new(mouse.X - elemento.AbsolutePosition.X, mouse.Y - elemento.AbsolutePosition.Y)
+                startPos = elemento.Position
+mouseOffset = Vector2.new(mouse.X - elemento.AbsolutePosition.X, mouse.Y - elemento.AbsolutePosition.Y)
             end
         end)
 
