@@ -9,7 +9,10 @@ ScreenGuiBotao.Parent = game.Players.LocalPlayer.PlayerGui
 
 local TweenService = game:GetService("TweenService")
 
-local function criarElemento(tipo, propriedades)
+local criarElemento
+
+-- Função para criar elementos da GUI
+criarElemento = function(tipo, propriedades)
     local elemento = Instance.new(tipo)
     if not elemento then
         warn("Erro ao criar elemento")
@@ -23,7 +26,10 @@ local function criarElemento(tipo, propriedades)
     return elemento
 end
 
-local function criarGUI()
+local criarGUI
+
+-- Função principal para criar a GUI
+criarGUI = function()
     -- Obter o tamanho da tela do jogador
     local player = game.Players.LocalPlayer
     if not player then
@@ -111,15 +117,15 @@ local function criarGUI()
     local menuLateral = criarElemento("Frame", {
         Parent = frame,
         BackgroundColor3 = Color3.fromRGB(50, 50, 50),
-        BorderSizePixel = 0,
-        Position = UDim2.new(0, 0, 0, 0),
+        BorderSizePixel = 0,
+	Position = UDim2.new(0, 0, 0, 0),
         Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
     })
 	if not menuLateral then return end
 
     -- Criar o ScrollingFrame
-    local scrollingFrame = criarElemento("ScrollingFrame", {
+    local scrollingFrame = criarElemento("ScrollingFrame", {
         Parent = menuLateral,
         BackgroundColor3 = Color3.fromRGB(50, 50, 50),
         BorderSizePixel = 0,
@@ -133,14 +139,14 @@ local function criarGUI()
 
     -- Opções do Menu Lateral
     local opcoes = {
-        {nome = "Créditos", icone = "rbxassetid://0"},
-        {nome = "Main", icone = "rbxassetid://0"},
-        {nome = "Farm", icone = "rbxassetid://0"},
-        {nome = "V4", icone = "rbxassetid://0"},
-        {nome = "Raid", icone = "rbxassetid://0"},
-        {nome = "Teleport", icone = "rbxassetid://0"},
-        {nome = "Config", icone = "rbxassetid://0"},
-        {nome = "Server Hop", icone = "rbxassetid://0"}
+        {nome = "Créditos"},
+        {nome = "Main"},
+        {nome = "Farm"},
+        {nome = "V4"},
+        {nome = "Raid"},
+        {nome = "Teleport"},
+        {nome = "Config"},
+        {nome = "Server Hop"}
     }
 
     local alturaOpcao = 1 / #opcoes
@@ -205,22 +211,42 @@ local function criarGUI()
     arrastarElemento(frame)
     arrastarElemento(button)
 
-    -- Animação de Carregamento
-    local tempoCarregamento = 3
-    for i = 1, 100 do
-        wait(tempoCarregamento / 100)
-        progressBar:TweenSize(UDim2.new(i / 100, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, tempoCarregamento / 100, true)
-    end
+	-- Animação de carregamento e transição
+	local function iniciarCarregamento()
+		local duracaoTotalCarregamento = 3 -- Tempo total de carregamento em segundos
 
-    -- Esmaecer a tela de carregamento
-    TweenService:Create(loadingGui, TweenInfo.new(1), {BackgroundTransparency = 1}):Play()
-    wait(1)
-    loadingGui:Destroy()
+		-- Função para atualizar a barra de progresso
+		local function atualizarBarraDeProgresso(progresso)
+			progressBar:TweenSize(
+				UDim2.new(progresso, 0, 1, 0),
+				Enum.EasingDirection.Out,
+				Enum.EasingStyle.Quad,
+				duracaoTotalCarregamento / 100 * 1,
+				true
+			)
+		end
 
-    -- Animando a GUI principal
-    ScreenGuiPrincipal.Enabled = true
-    --TweenService:Create(frame, TweenInfo.new(1), {Transparency = 0}):Play()
+		-- Loop para simular o carregamento
+		for i = 1, 100 do
+			wait(duracaoTotalCarregamento / 100)
+			atualizarBarraDeProgresso(i / 100)
+		end
+
+		-- Animação de esmaecimento da tela de carregamento
+		TweenService:Create(loadingFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
+		TweenService:Create(loadingText, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 1}):Play()
+
+		wait(0.5)
+
+		-- Desabilitar a tela de carregamento
+		loadingGui.Enabled = false
+
+		-- Animação de esmaecimento da GUI principal
+		ScreenGuiPrincipal.Enabled = true
+		TweenService:Create(frame, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Transparency = 0}):Play()
+	end
+
+	iniciarCarregamento()
 end
 
--- Chamar a função para criar a GUI
 criarGUI()
