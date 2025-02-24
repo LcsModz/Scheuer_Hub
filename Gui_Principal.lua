@@ -19,7 +19,7 @@ local function criarGUI()
     local telaX = game.Players.LocalPlayer.PlayerGui.ScreenGui.AbsoluteSize.X
     local telaY = game.Players.LocalPlayer.PlayerGui.ScreenGui.AbsoluteSize.Y
 
-    -- Calcular o tamanho e a posição da GUI
+    -- Calcular o tamanho e a posição da GUI
     local larguraGUI = telaX * 0.75
     local alturaGUI = telaY * 0.75
     local posX = (telaX - larguraGUI) / 2
@@ -46,19 +46,20 @@ local function criarGUI()
         Name = "MenuLateral",
     })
 
-    -- Opções do Menu Lateral
+    -- Opções do Menu Lateral
     local opcoes = {
-        {nome = "Créditos"}, -- Substituir "rbxassetid://0" pelo ID do ícone
-        {nome = "Main"},
-        {nome = "Farm"},
-        {nome = "V4"},
-        {nome = "Raid"},
-        {nome = "Teleport"},
-        {nome = "Config"}
+        {nome = "Créditos", icone = "rbxassetid://0"}, -- Substituir "rbxassetid://0" pelo ID do ícone
+        {nome = "Main", icone = "rbxassetid://0"},
+        {nome = "Farm", icone = "rbxassetid://0"},
+        {nome = "V4", icone = "rbxassetid://0"},
+        {nome = "Raid", icone = "rbxassetid://0"},
+        {nome = "Teleport", icone = "rbxassetid://0"},
+        {nome = "Config", icone = "rbxassetid://0"},
+        {nome = "Server Hop", icone = "rbxassetid://0"} -- Nova opção adicionada
     }
 
     local alturaOpcao = 1 / #opcoes
-    local espacamento = 0.02 -- Espaçamento entre os botões
+    local espacamento = 0.02 -- Espaçamento entre os botões
     for i, opcao in ipairs(opcoes) do
         local botao = criarElemento("TextButton", {
             Parent = menuLateral,
@@ -71,17 +72,17 @@ local function criarGUI()
             TextSize = 14,
             Text = opcao.nome,
             Name = "Opcao" .. opcao.nome,
-            TextXAlignment = Enum.TextXAlignment.Left, -- Alinhar o texto à esquerda
-            --Image = opcao.icone -- Adicionar imagem do ícone (se tiver)
+            TextXAlignment = Enum.TextXAlignment.Left, -- Alinhar o texto à esquerda
+            --Image = opcao.icone -- Adicionar imagem do ícone (se tiver)
         })
     end
 
-    -- Criar o TextButton (Botão Sólido)
+    -- Criar o TextButton (Botão Sólido)
     local button = criarElemento("TextButton", {
         Parent = ScreenGuiBotao,
         BackgroundTransparency = 0,
         Size = UDim2.new(0, 20, 0, 20),
-        Position = UDim2.new(0, frame.Position.X.Offset - 25, 0.5, -10), -- Posicionado à esquerda da GUI principal
+        Position = UDim2.new(0, frame.Position.X.Offset - 25, 0.5, -10), -- Posicionado à esquerda da GUI principal
         Text = "",
         Draggable = true,
         Name = "BotaoImagem",
@@ -98,7 +99,7 @@ local function criarGUI()
             if input.UserInputType == Enum.UserInputType.MouseButton1 then
                 dragging = true
                 startPos = elemento.Position
-mouseOffset = Vector2.new(mouse.X - elemento.AbsolutePosition.X, mouse.Y - elemento.AbsolutePosition.Y)
+                mouseOffset = Vector2.new(mouse.X - elemento.AbsolutePosition.X, mouse.Y - elemento.AbsolutePosition.Y)
             end
         end)
 
@@ -119,5 +120,5 @@ mouseOffset = Vector2.new(mouse.X - elemento.AbsolutePosition.X, mouse.Y - eleme
     arrastarElemento(button)
 end
 
--- Chamar a função para criar a GUI
+-- Chamar a função para criar a GUI
 criarGUI()
