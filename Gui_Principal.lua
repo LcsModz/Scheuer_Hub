@@ -48,10 +48,14 @@ local function criarGUI()
 
     -- Opções do Menu Lateral
     local opcoes = {
-        {nome = "Home", icone = "rbxassetid://0"}, -- Substituir "rbxassetid://0" pelo ID do ícone
-        {nome = "Player", icone = "rbxassetid://0"},
-        {nome = "Teleports", icone = "rbxassetid://0"},
-        {nome = "WorldTab", icone = "rbxassetid://0"}
+        {nome = "Créditos", icone = "rbxassetid://0"}, -- Substituir "rbxassetid://0" pelo ID do ícone
+        {nome = "Main", icone = "rbxassetid://0"},
+        {nome = "Farm", icone = "rbxassetid://0"},
+        {nome = "V4", icone = "rbxassetid://0"},
+        {nome = "Raid", icone = "rbxassetid://0"},
+        {nome = "Teleport", icone = "rbxassetid://0"},
+        {nome = "Config", icone = "rbxassetid://0"},
+	    {nome = "Server Hop", icone = "rbxassetid://0"}
     }
 
     local alturaOpcao = 1 / #opcoes
@@ -93,9 +97,9 @@ local function criarGUI()
 
         elemento.InputBegan:Connect(function(input)
             if input.UserInputType == Enum.UserInputType.MouseButton1 then
-dragging = true
+                dragging = true
                 startPos = elemento.Position
-                mouseOffset = Vector2.new(mouse.X - elemento.AbsolutePosition.X, mouse.Y - elemento.AbsolutePosition.Y)
+                mouseOffset = Vector2.new(mouse.X - elemento.AbsolutePosition.X, mouse.Y - elemento.AbsolutePosition.Y)
             end
         end)
 
@@ -116,4 +120,5 @@ dragging = true
     arrastarElemento(button)
 end
 
+-- Chamar a função para criar a GUI
 criarGUI()
