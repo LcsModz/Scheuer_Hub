@@ -35,16 +35,16 @@ local function criarGUI()
         Name = "ConfiguracoesFrame",
     })
 
-    -- Criar o Frame (Menu Lateral)
+    -- Criar o ScrollingFrame (Menu Lateral)
     local menuLateralLargura = larguraGUI * 0.2 -- 20% da largura da GUI
-    local menuLateral = criarElemento("ScrollingFrame", { -- Alterado para ScrollingFrame
+    local menuLateral = criarElemento("ScrollingFrame", {
         Parent = frame,
         BackgroundColor3 = Color3.fromRGB(50, 50, 50), -- Tom de cinza mais escuro
         BorderSizePixel = 0,
         Position = UDim2.new(0, 0, 0, 0),
         Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
-        CanvasSize = UDim2.new(1, 0, 0, 0), -- Tamanho inicial do canvas
+        CanvasSize = UDim2.new(1, 0, 1, 0), -- Tamanho inicial do canvas
         ScrollBarThickness = 6, -- Espessura da barra de rolagem
     })
 
@@ -63,7 +63,6 @@ local function criarGUI()
     local alturaOpcao = 0.08 -- Altura fixa para cada opção
     local espacamento = 0.02 -- Espaçamento entre os botões
     local alturaTotal = #opcoes * alturaOpcao + (#opcoes - 1) * espacamento -- Altura total das opções
-    menuLateral.CanvasSize = UDim2.new(1, 0, 0, alturaTotal) -- Ajusta o tamanho do canvas
 
     for i, opcao in ipairs(opcoes) do
         local botao = criarElemento("TextButton", {
@@ -81,6 +80,9 @@ local function criarGUI()
             --Image = opcao.icone -- Adicionar imagem do ícone (se tiver)
         })
     end
+
+    -- Ajustar o CanvasSize após criar todos os botões
+    menuLateral.CanvasSize = UDim2.new(1, 0, 0, alturaTotal)
 
     -- Criar o TextButton (Botão Sólido)
     local button = criarElemento("TextButton", {
