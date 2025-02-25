@@ -35,6 +35,11 @@ local function criarGUI()
         Name = "ConfiguracoesFrame",
     })
 
+    -- Adicionar borda arredondada ao Frame principal
+    local frameCorner = Instance.new("UICorner")
+    frameCorner.CornerRadius = UDim.new(0, 10)
+    frameCorner.Parent = frame
+
     -- Criar o Frame (Menu Lateral)
     local menuLateralLargura = larguraGUI * 0.2 -- 20% da largura da GUI
     local menuLateral = criarElemento("Frame", {
@@ -45,6 +50,11 @@ local function criarGUI()
         Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
     })
+
+    -- Adicionar borda arredondada ao Menu Lateral
+    local menuLateralCorner = Instance.new("UICorner")
+    menuLateralCorner.CornerRadius = UDim.new(0, 10)
+    menuLateralCorner.Parent = menuLateral
 
     -- Opções do Menu Lateral
     local opcoes = {
@@ -78,9 +88,9 @@ local function criarGUI()
             TextXAlignment = Enum.TextXAlignment.Left, -- Alinhar o texto à esquerda
         })
 
-        -- Adicionar borda arredondada
+        -- Adicionar borda arredondada a cada botão
         local corner = Instance.new("UICorner")
-        corner.CornerRadius = UDim.new(0, 5) -- Ajuste o valor para alterar o raio do arredondamento
+        corner.CornerRadius = UDim.new(0, 10)
         corner.Parent = botao
     end
 
@@ -95,6 +105,11 @@ local function criarGUI()
         Name = "BotaoImagem",
         BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     })
+
+    -- Adicionar borda arredondada ao botão arrastável
+    local buttonCorner = Instance.new("UICorner")
+    buttonCorner.CornerRadius = UDim.new(0, 10)
+    buttonCorner.Parent = button
 
     local function arrastarElemento(elemento)
         local dragging = false
