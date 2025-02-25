@@ -103,7 +103,7 @@ local function criarGUI()
     local carregamentoGui = criarElemento("ScreenGui", {
         Parent = game.Players.LocalPlayer.PlayerGui,
         Name = "CarregamentoGUI",
-        BackgroundTransparency = 1,
+        BackgroundColor3 = Color3.new(0, 0, 0, 0), -- Inicialmente transparente
     })
 
     local carregamentoFrame = criarElemento("Frame", {
@@ -143,7 +143,7 @@ local function criarGUI()
 
     -- Animação de Entrada da GUI de Carregamento
     local tweenInfoCarregamento = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
-    local tweenCarregamento = game:GetService("TweenService"):Create(carregamentoFrame, tweenInfoCarregamento, {BackgroundTransparency = 0})
+    local tweenCarregamento = game:GetService("TweenService"):Create(carregamentoGui, tweenInfoCarregamento, {BackgroundColor3 = Color3.new(0, 0, 0, 1)})
     tweenCarregamento:Play()
 
     -- Animação de Carregamento
@@ -159,7 +159,7 @@ local function criarGUI()
         if progresso == 1 then
             -- Animação de Saída da GUI de Carregamento
             local tweenInfoSaidaCarregamento = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
-            local tweenSaidaCarregamento = game:GetService("TweenService"):Create(carregamentoFrame, tweenInfoSaidaCarregamento, {BackgroundTransparency = 1})
+            local tweenSaidaCarregamento = game:GetService("TweenService"):Create(carregamentoGui, tweenInfoSaidaCarregamento, {BackgroundColor3 = Color3.new(0, 0, 0, 0)})
             tweenSaidaCarregamento:Play()
 
             -- Atraso antes de exibir a GUI Principal
