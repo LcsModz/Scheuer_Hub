@@ -52,9 +52,9 @@ local function criarGUI()
     })
 
         -- Adicionar borda arredondada ao Frame secundario
-    local frameCorner = Instance.new("UICorner")
-    frameCorner.CornerRadius = UDim.new(0, 10)
-    frameCorner.Parent = menuLateral
+    local frameCorner2 = Instance.new("UICorner")
+    frameCorner2.CornerRadius = UDim.new(0, 10)
+    frameCorner2.Parent = menuLateral
 
     -- Opções do Menu Lateral
     local opcoes = {
