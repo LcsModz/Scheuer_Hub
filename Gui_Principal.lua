@@ -33,6 +33,7 @@ local function criarGUI()
         Position = UDim2.new(0.5, -larguraGUI / 2, 0.5, -alturaGUI / 2),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
         Name = "ConfiguracoesFrame",
+        BackgroundTransparency = 1, -- Inicialmente transparente
         Visible = false, -- Inicialmente invisível
     })
 
@@ -153,11 +154,16 @@ local function criarGUI()
             carregamentoGui:Destroy()
             frame.Visible = true
 
-            -- Animação de Entrada da GUI Principal
-            frame.Position = UDim2.new(0.5, -larguraGUI / 2, 1.5, -alturaGUI / 2) -- Posição inicial fora da tela
-            local tweenInfoPrincipal = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
-            local tweenPrincipal = game:GetService("TweenService"):Create(frame, tweenInfoPrincipal, {Position = UDim2.new(0.5, -larguraGUI / 2, 0.5, -alturaGUI / 2)}) -- Posição centralizada
-            tweenPrincipal:Play()
+            -- Animação de Transparência da GUI Principal
+            local tempoTransparencia = 2 -- Tempo total para a transição (segundos)
+            local passos = 10 -- Número de passos na transição
+            local tempoPasso = tempoTransparencia / passos
+            local transparenciaPasso = 1 / passos
+
+            for i = 1, passos do
+                wait(tempoPasso)
+                frame.BackgroundTransparency = 1 - (i * transparenciaPasso)
+            end
         end
     end)
 end
