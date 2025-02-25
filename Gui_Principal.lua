@@ -110,7 +110,7 @@ local function criarGUI()
         Parent = carregamentoGui,
         BackgroundColor3 = Color3.fromRGB(50, 50, 50),
         BorderSizePixel = 0,
-        Size = UDim2.new(3, 0, 3, 0),
+        Size = UDim2.new(1, 0, 1, 0),
     })
 
     local carregamentoTexto = criarElemento("TextLabel", {
