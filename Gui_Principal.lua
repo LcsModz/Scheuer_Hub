@@ -156,20 +156,12 @@ local function criarGUI()
             frame.Visible = true
 
             -- Animação de Transparência da GUI Principal e Lateral
-            local tempoTransparencia = 2 -- Tempo total para a transição (segundos)
-            local passos = 10 -- Número de passos na transição
-            local tempoPasso = tempoTransparencia / passos
-            local transparenciaPasso = 1 / passos
+            local tweenInfo = TweenInfo.new(2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+            local tweenFrame = game:GetService("TweenService"):Create(frame, tweenInfo, {BackgroundTransparency = 0})
+            local tweenMenuLateral = game:GetService("TweenService"):Create(menuLateral, tweenInfo, {BackgroundTransparency = 0})
 
-            for i = 1, passos do
-                wait(tempoPasso * 0.5) -- Aumenta o tempo de espera para 0.1 segundos
-                if frame.BackgroundTransparency > 0 then
-                    frame.BackgroundTransparency = 1 - (i * transparenciaPasso)
-                    menuLateral.BackgroundTransparency = 1 - (i * transparenciaPasso)
-                else
-                    break -- Sai do loop se a transparência já for 0
-                end
-            end
+            tweenFrame:Play()
+            tweenMenuLateral:Play()
         end
     end)
 end
