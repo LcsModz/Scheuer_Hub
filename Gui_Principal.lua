@@ -29,10 +29,11 @@ local function criarGUI()
     local frame = criarElemento("Frame", {
         Parent = ScreenGuiPrincipal,
         BackgroundColor3 = Color3.fromRGB(30, 30, 30), -- Fundo escuro
-        BorderSizePixel = 3,
+        BorderSizePixel = 0,
         Position = UDim2.new(0, posX, 0, posY),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
         Name = "ConfiguracoesFrame",
+        Visible = false, -- Inicialmente invisível
     })
 
     -- Adicionar borda arredondada ao Frame principal
@@ -45,7 +46,7 @@ local function criarGUI()
     local menuLateral = criarElemento("Frame", {
         Parent = frame,
         BackgroundColor3 = Color3.fromRGB(50, 50, 50), -- Tom de cinza mais escuro
-        BorderSizePixel = 3,
+        BorderSizePixel = 0,
         Position = UDim2.new(0, 0, 0, 0),
         Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
@@ -60,7 +61,7 @@ local function criarGUI()
     local button = criarElemento("TextButton", {
         Parent = ScreenGuiBotao,
         BackgroundTransparency = 0,
-        Size = UDim2.new(0, 40, 0, 40),
+        Size = UDim2.new(0, 20, 0, 20),
         Position = UDim2.new(0, frame.Position.X.Offset - 25, 0.5, -10), -- Posicionado à esquerda da GUI principal
         Text = "",
         Draggable = true,
@@ -97,6 +98,68 @@ local function criarGUI()
 
     arrastarElemento(frame)
     arrastarElemento(button)
+
+    -- GUI de Carregamento
+    local carregamentoGui = criarElemento("ScreenGui", {
+        Parent = game.Players.LocalPlayer.PlayerGui,
+        Name = "CarregamentoGUI",
+    })
+
+    local carregamentoFrame = criarElemento("Frame", {
+        Parent = carregamentoGui,
+        BackgroundColor3 = Color3.fromRGB(50, 50, 50),
+        BorderSizePixel = 0,
+        Size = UDim2.new(1, 0, 1, 0),
+    })
+
+    local carregamentoTexto = criarElemento("TextLabel", {
+        Parent = carregamentoFrame,
+        BackgroundColor3 = Color3.new(0, 0, 0),
+        BackgroundTransparency = 1,
+        Position = UDim2.new(0.5, -100, 0.4, 0),
+        Size = UDim2.new(0, 200, 0, 50),
+        Font = Enum.Font.SourceSansBold,
+        Text = "Carregando...",
+        TextColor3 = Color3.new(1, 1, 1),
+        TextScaled = true,
+    })
+
+    local barraCarregamento = criarElemento("Frame", {
+        Parent = carregamentoFrame,
+        BackgroundColor3 = Color3.fromRGB(100, 100, 100),
+        BorderSizePixel = 1,
+        BorderColor3 = Color3.fromRGB(200, 200, 200),
+        Position = UDim2.new(0.5, -200, 0.5, -25),
+        Size = UDim2.new(0, 400, 0, 20),
+    })
+
+    local progressoCarregamento = criarElemento("Frame", {
+        Parent = barraCarregamento,
+        BackgroundColor3 = Color3.fromRGB(0, 255, 0),
+        Size = UDim2.new(0, 0, 1, 0),
+    })
+
+    -- Animação de Carregamento
+    local tempoTotal = 3 -- Tempo total de carregamento (segundos)
+    local tempoDecorrido = 0
+    local progresso = 0
+
+    game:GetService("RunService").Heartbeat:Connect(function(delta)
+        tempoDecorrido = tempoDecorrido + delta
+        progresso = math.min(tempoDecorrido / tempoTotal, 1)
+        progressoCarregamento.Size = UDim2.new(progresso, 0, 1, 0)
+
+        if progresso == 1 then
+            carregamentoGui:Destroy()
+            frame.Visible = true
+
+            -- Animação de Entrada da GUI Principal
+            frame.Position = UDim2.new(0, posX, 1, posY)
+            local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+            local tween = game:GetService("TweenService"):Create(frame, tweenInfo, {Position = UDim2.new(0, posX, 0, posY)})
+            tween:Play()
+        end
+    end)
 end
 
 -- Chamar a função para criar a GUI
