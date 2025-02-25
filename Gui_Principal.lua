@@ -63,13 +63,18 @@ local function criarGUI()
     local button = criarElemento("TextButton", {
         Parent = ScreenGuiBotao,
         BackgroundTransparency = 0,
-        Size = UDim2.new(0, 20, 0, 20),
-        Position = UDim2.new(0, frame.Position.X.Offset - 25, 0.5, -10), -- Posicionado à esquerda da GUI principal
+        Size = UDim2.new(0, 30, 0, 30), -- Aumenta o tamanho do botão
+        Position = UDim2.new(0, frame.Position.X.Offset - 35, 0.5, -15), -- Ajusta a posição do botão
         Text = "",
         Draggable = true,
         Name = "BotaoImagem",
         BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     })
+
+    -- Adicionar bordas arredondadas ao botão
+    local buttonCorner = Instance.new("UICorner")
+    buttonCorner.CornerRadius = UDim.new(0, 15)
+    buttonCorner.Parent = button
 
     local function arrastarElemento(elemento)
         local dragging = false
