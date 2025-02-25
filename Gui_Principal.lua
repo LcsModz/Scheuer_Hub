@@ -64,7 +64,7 @@ local function criarGUI()
         Parent = ScreenGuiBotao,
         BackgroundTransparency = 0,
         Size = UDim2.new(0, 30, 0, 30), -- Aumenta o tamanho do botão
-        Position = UDim2.new(0, frame.Position.X.Offset - 35, 0.5, -15), -- Ajusta a posição do botão
+        Position = UDim2.new(0, frame.Position.X.Offset - 25, 0.5, -15), -- Ajusta a posição do botão
         Text = "",
         Draggable = true,
         Name = "BotaoImagem",
