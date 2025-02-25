@@ -29,7 +29,7 @@ local function criarGUI()
     local frame = criarElemento("Frame", {
         Parent = ScreenGuiPrincipal,
         BackgroundColor3 = Color3.fromRGB(30, 30, 30), -- Fundo escuro
-        BorderSizePixel = 2,
+        BorderSizePixel = 0,
         Position = UDim2.new(0, posX, 0, posY),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
         Name = "ConfiguracoesFrame",
@@ -63,11 +63,11 @@ local function criarGUI()
         {nome = "Server Hop", icone = "rbxassetid://0"} -- Nova opção adicionada
     }
 
-    local alturaOpcao = 0.09 -- Altura fixa para cada opção (ajustada para ser menor)
+    local alturaOpcao = 0.08 -- Altura fixa para cada opção (ajustada para ser menor)
     local espacamento = 0.01 -- Espaçamento entre os botões (ajustado para ser menor)
     local margemLateral = 0.05 -- Margem lateral para os botões
     local margemTopo = 0.02 -- Margem superior para o primeiro botão
-    local margemInterna = 0.02 -- Margem interna entre os botões e as paredes da GUI lateral
+    local margemInterna = 0.05 -- Margem interna entre os botões e as paredes da GUI lateral (aumentada)
 
     for i, opcao in ipairs(opcoes) do
         local botao = criarElemento("TextButton", {
@@ -75,7 +75,7 @@ local function criarGUI()
             BackgroundColor3 = Color3.fromRGB(70, 70, 70),
             BorderSizePixel = 0,
             Position = UDim2.new(0, margemInterna + margemLateral, alturaOpcao * (i - 1) + espacamento * (i - 1) + margemTopo + margemInterna, 0),
-            Size = UDim2.new(1, - (margemLateral * 2) - (margemInterna * 2), alturaOpcao - espacamento - (margemInterna * 2), 0),
+            Size = UDim2.new(1, - (margemLateral * 2) - (margemInterna * 2) * 2, alturaOpcao - espacamento - (margemInterna * 2), 0), -- Ajuste no tamanho
             Font = Enum.Font.SourceSansBold,
             TextColor3 = Color3.fromRGB(255, 255, 255),
             TextSize = 14,
