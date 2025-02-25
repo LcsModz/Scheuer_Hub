@@ -140,7 +140,7 @@ local function criarGUI()
     })
 
     -- Animação de Carregamento
-    local tempoTotal = 5 -- Tempo total de carregamento (segundos)
+    local tempoTotal = 8 -- Tempo total de carregamento (segundos)
     local tempoDecorrido = 0
     local progresso = 0
 
