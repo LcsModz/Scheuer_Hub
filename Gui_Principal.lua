@@ -51,6 +51,7 @@ local function criarGUI()
         Position = UDim2.new(0, 0, 0, 0),
         Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
+        BackgroundTransparency = 1, -- Inicialmente transparente
     })
 
     -- Adicionar borda arredondada ao Menu Lateral
@@ -108,9 +109,9 @@ local function criarGUI()
 
     local carregamentoFrame = criarElemento("Frame", {
         Parent = carregamentoGui,
-        BackgroundColor3 = Color3.fromRGB(50, 50, 50),
+        BackgroundColor3 = Color3.fromRGB(100, 100, 100), -- Fundo cinza
         BorderSizePixel = 0,
-        Size = UDim2.new(1, 0, 1, 0),
+        Size = UDim2.new(1, 0, 1, 0), -- Ocupa toda a tela
     })
 
     local carregamentoTexto = criarElemento("TextLabel", {
@@ -154,7 +155,7 @@ local function criarGUI()
             carregamentoGui:Destroy()
             frame.Visible = true
 
-            -- Animação de Transparência da GUI Principal
+            -- Animação de Transparência da GUI Principal e Lateral
             local tempoTransparencia = 2 -- Tempo total para a transição (segundos)
             local passos = 10 -- Número de passos na transição
             local tempoPasso = tempoTransparencia / passos
@@ -162,7 +163,12 @@ local function criarGUI()
 
             for i = 1, passos do
                 wait(tempoPasso)
-                frame.BackgroundTransparency = 1 - (i * transparenciaPasso)
+                if frame.BackgroundTransparency > 0 then
+                    frame.BackgroundTransparency = 1 - (i * transparenciaPasso)
+                    menuLateral.BackgroundTransparency = 1 - (i * transparenciaPasso)
+                else
+                    break -- Sai do loop se a transparência já for 0
+                end
             end
         end
     end)
