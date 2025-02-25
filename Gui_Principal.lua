@@ -60,8 +60,8 @@ local function criarGUI()
     local button = criarElemento("TextButton", {
         Parent = ScreenGuiBotao,
         BackgroundTransparency = 0,
-        Size = UDim2.new(0, 20, 0, 20),
-        Position = UDim2.new(0, frame.Position.X.Offset - 25, 0.5, -10), -- Posicionado à esquerda da GUI principal
+        Size = UDim2.new(0, 40, 0, 40),
+        Position = UDim2.new(0, frame.Position.X.Offset - 35, 1.5, -20), -- Posicionado à esquerda da GUI principal
         Text = "",
         Draggable = true,
         Name = "BotaoImagem",
