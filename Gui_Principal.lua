@@ -126,7 +126,3 @@ local function criarGUI()
 
     arrastarElemento(frame)
     arrastarElemento(button)
-end
-
--- Chamar a função para criar a GUI
-criarGUI()
