@@ -103,7 +103,7 @@ local function criarGUI()
     local carregamentoGui = criarElemento("ScreenGui", {
         Parent = game.Players.LocalPlayer.PlayerGui,
         Name = "CarregamentoGUI",
-        BackgroundColor3 = Color3.new(0, 0, 0, 0), -- Inicialmente transparente
+        BackgroundColor3 = Color3.new(0, 0, 0, 1), -- Inicialmente visível
     })
 
     local carregamentoFrame = criarElemento("Frame", {
@@ -111,7 +111,6 @@ local function criarGUI()
         BackgroundColor3 = Color3.fromRGB(50, 50, 50),
         BorderSizePixel = 0,
         Size = UDim2.new(1, 0, 1, 0),
-        BackgroundTransparency = 1,
     })
 
     local carregamentoTexto = criarElemento("TextLabel", {
@@ -141,11 +140,6 @@ local function criarGUI()
         Size = UDim2.new(0, 0, 1, 0),
     })
 
-    -- Animação de Entrada da GUI de Carregamento
-    local tweenInfoCarregamento = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
-    local tweenCarregamento = game:GetService("TweenService"):Create(carregamentoGui, tweenInfoCarregamento, {BackgroundColor3 = Color3.new(0, 0, 0, 1)})
-    tweenCarregamento:Play()
-
     -- Animação de Carregamento
     local tempoTotal = 5 -- Tempo total de carregamento (segundos)
     local tempoDecorrido = 0
@@ -157,14 +151,6 @@ local function criarGUI()
         progressoCarregamento.Size = UDim2.new(progresso, 0, 1, 0)
 
         if progresso == 1 then
-            -- Animação de Saída da GUI de Carregamento
-            local tweenInfoSaidaCarregamento = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
-            local tweenSaidaCarregamento = game:GetService("TweenService"):Create(carregamentoGui, tweenInfoSaidaCarregamento, {BackgroundColor3 = Color3.new(0, 0, 0, 0)})
-            tweenSaidaCarregamento:Play()
-
-            -- Atraso antes de exibir a GUI Principal
-            wait(3)
-
             carregamentoGui:Destroy()
             frame.Visible = true
 
