@@ -82,6 +82,7 @@ local function criarGUI()
             Text = opcao.nome,
             Name = "Opcao" .. opcao.nome,
             TextXAlignment = Enum.TextXAlignment.Left, -- Alinhar o texto à esquerda
+            TextYAlignment = Enum.TextYAlignment.Center, -- Centralizar o texto verticalmente
         })
     end
 
