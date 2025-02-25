@@ -30,7 +30,7 @@ local function criarGUI()
         Parent = ScreenGuiPrincipal,
         BackgroundColor3 = Color3.fromRGB(30, 30, 30), -- Fundo escuro
         BorderSizePixel = 0,
-        Position = UDim2.new(0, posX, 0, posY),
+        Position = UDim2.new(0.5, -larguraGUI / 2, 0.5, -alturaGUI / 2),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
         Name = "ConfiguracoesFrame",
         Visible = false, -- Inicialmente invisível
@@ -103,6 +103,7 @@ local function criarGUI()
     local carregamentoGui = criarElemento("ScreenGui", {
         Parent = game.Players.LocalPlayer.PlayerGui,
         Name = "CarregamentoGUI",
+        BackgroundColor3 = Color3.new(0, 0, 0, 1), -- Inicialmente visível
     })
 
     local carregamentoFrame = criarElemento("Frame", {
@@ -154,9 +155,9 @@ local function criarGUI()
             frame.Visible = true
 
             -- Animação de Entrada da GUI Principal
-            frame.Position = UDim2.new(0, posX, 1, posY)
+            frame.Position = UDim2.new(0.5, -larguraGUI / 2, 1.5, -alturaGUI / 2) -- Posição inicial fora da tela
             local tweenInfoPrincipal = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
-            local tweenPrincipal = game:GetService("TweenService"):Create(frame, tweenInfoPrincipal, {Position = UDim2.new(0, posX, 0, posY)})
+            local tweenPrincipal = game:GetService("TweenService"):Create(frame, tweenInfoPrincipal, {Position = UDim2.new(0.5, -larguraGUI / 2, 0.5, -alturaGUI / 2)}) -- Posição centralizada
             tweenPrincipal:Play()
         end
     end)
