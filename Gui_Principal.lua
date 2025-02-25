@@ -51,40 +51,6 @@ local function criarGUI()
         Name = "MenuLateral",
     })
 
-    -- Opções do Menu Lateral
-    local opcoes = {
-        {nome = "Créditos", icone = "rbxassetid://0"}, -- Substituir "rbxassetid://0" pelo ID do ícone
-        {nome = "Main", icone = "rbxassetid://0"},
-        {nome = "Farm", icone = "rbxassetid://0"},
-        {nome = "V4", icone = "rbxassetid://0"},
-        {nome = "Raid", icone = "rbxassetid://0"},
-        {nome = "Teleport", icone = "rbxassetid://0"},
-        {nome = "Config", icone = "rbxassetid://0"},
-        {nome = "Server Hop", icone = "rbxassetid://0"} -- Nova opção adicionada
-    }
-
-    local alturaOpcao = 0.12 -- Altura fixa para cada opção
-    local espacamento = 0.02 -- Espaçamento entre os botões
-    local margemLateral = 0.05 -- Margem lateral para os botões
-    local margemTopo = 0.02 -- Margem superior para o primeiro botão
-
-    for i, opcao in ipairs(opcoes) do
-        local botao = criarElemento("TextButton", {
-            Parent = menuLateral,
-            BackgroundColor3 = Color3.fromRGB(70, 70, 70),
-            BorderSizePixel = 0,
-            Position = UDim2.new(0, margemLateral, alturaOpcao * (i - 1) + espacamento * (i - 1) + margemTopo, 0),
-            Size = UDim2.new(1, -margemLateral * 2, alturaOpcao - espacamento, 0),
-            Font = Enum.Font.SourceSansBold,
-            TextColor3 = Color3.fromRGB(255, 255, 255),
-            TextSize = 14,
-            Text = opcao.nome,
-            Name = "Opcao" .. opcao.nome,
-            TextXAlignment = Enum.TextXAlignment.Left, -- Alinhar o texto à esquerda
-            TextYAlignment = Enum.TextYAlignment.Center, -- Centralizar o texto verticalmente
-        })
-    end
-
     -- Criar o TextButton (Botão Sólido)
     local button = criarElemento("TextButton", {
         Parent = ScreenGuiBotao,
