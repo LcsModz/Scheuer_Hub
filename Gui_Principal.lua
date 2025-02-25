@@ -103,7 +103,6 @@ local function criarGUI()
     local carregamentoGui = criarElemento("ScreenGui", {
         Parent = game.Players.LocalPlayer.PlayerGui,
         Name = "CarregamentoGUI",
-        BackgroundColor3 = Color3.new(0, 0, 0, 1), -- Inicialmente visível
     })
 
     local carregamentoFrame = criarElemento("Frame", {
