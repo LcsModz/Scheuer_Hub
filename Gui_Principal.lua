@@ -58,24 +58,30 @@ local function criarGUI()
         {nome = "Server Hop", icone = "rbxassetid://0"} -- Nova opção adicionada
     }
 
-    local alturaOpcao = 0.1 -- Altura fixa para cada opção (ajustada para ser menor)
+    local alturaOpcao = 0.09 -- Altura fixa para cada opção (ajustada para ser menor)
     local espacamento = 0.01 -- Espaçamento entre os botões (ajustado para ser menor)
+    local margemLateral = 0.05 -- Margem lateral para os botões
+    local margemTopo = 0.02 -- Margem superior para o primeiro botão
 
     for i, opcao in ipairs(opcoes) do
         local botao = criarElemento("TextButton", {
             Parent = menuLateral,
             BackgroundColor3 = Color3.fromRGB(70, 70, 70),
             BorderSizePixel = 0,
-            Position = UDim2.new(0, 0, alturaOpcao * (i - 1) + espacamento * (i - 1), 0),
-            Size = UDim2.new(1, 0, alturaOpcao - espacamento, 0),
+            Position = UDim2.new(0, margemLateral, alturaOpcao * (i - 1) + espacamento * (i - 1) + margemTopo, 0),
+            Size = UDim2.new(1, -margemLateral * 2, alturaOpcao - espacamento, 0),
             Font = Enum.Font.SourceSansBold,
             TextColor3 = Color3.fromRGB(255, 255, 255),
             TextSize = 14,
             Text = opcao.nome,
             Name = "Opcao" .. opcao.nome,
             TextXAlignment = Enum.TextXAlignment.Left, -- Alinhar o texto à esquerda
-            --Image = opcao.icone -- Adicionar imagem do ícone (se tiver)
         })
+
+        -- Adicionar borda arredondada
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(0, 5) -- Ajuste o valor para alterar o raio do arredondamento
+        corner.Parent = botao
     end
 
     -- Criar o TextButton (Botão Sólido)
