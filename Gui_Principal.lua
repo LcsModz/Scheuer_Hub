@@ -29,7 +29,7 @@ local function criarGUI()
     local frame = criarElemento("Frame", {
         Parent = ScreenGuiPrincipal,
         BackgroundColor3 = Color3.fromRGB(30, 30, 30), -- Fundo escuro
-        BorderSizePixel = 0,
+        BorderSizePixel = 3,
         Position = UDim2.new(0, posX, 0, posY),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
         Name = "ConfiguracoesFrame",
@@ -45,11 +45,16 @@ local function criarGUI()
     local menuLateral = criarElemento("Frame", {
         Parent = frame,
         BackgroundColor3 = Color3.fromRGB(50, 50, 50), -- Tom de cinza mais escuro
-        BorderSizePixel = 0,
+        BorderSizePixel = 3,
         Position = UDim2.new(0, 0, 0, 0),
         Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
     })
+
+    -- Adicionar borda arredondada ao Menu Lateral
+    local menuLateralCorner = Instance.new("UICorner")
+    menuLateralCorner.CornerRadius = UDim.new(0, 10)
+    menuLateralCorner.Parent = menuLateral
 
     -- Criar o TextButton (Botão Sólido)
     local button = criarElemento("TextButton", {
