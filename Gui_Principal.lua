@@ -29,7 +29,7 @@ local function criarGUI()
     local frame = criarElemento("Frame", {
         Parent = ScreenGuiPrincipal,
         BackgroundColor3 = Color3.fromRGB(30, 30, 30), -- Fundo escuro
-        BorderSizePixel = 0,
+        BorderSizePixel = 2,
         Position = UDim2.new(0, posX, 0, posY),
         Size = UDim2.new(0, larguraGUI, 0, alturaGUI),
         Name = "ConfiguracoesFrame",
@@ -50,11 +50,6 @@ local function criarGUI()
         Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
     })
-
-    -- Adicionar borda arredondada ao Menu Lateral
-    local menuLateralCorner = Instance.new("UICorner")
-    menuLateralCorner.CornerRadius = UDim.new(0, 10)
-    menuLateralCorner.Parent = menuLateral
 
     -- Opções do Menu Lateral
     local opcoes = {
@@ -87,11 +82,6 @@ local function criarGUI()
             Name = "Opcao" .. opcao.nome,
             TextXAlignment = Enum.TextXAlignment.Left, -- Alinhar o texto à esquerda
         })
-
-        -- Adicionar borda arredondada a cada botão
-        local corner = Instance.new("UICorner")
-        corner.CornerRadius = UDim.new(0, 10)
-        corner.Parent = botao
     end
 
     -- Criar o TextButton (Botão Sólido)
@@ -105,11 +95,6 @@ local function criarGUI()
         Name = "BotaoImagem",
         BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     })
-
-    -- Adicionar borda arredondada ao botão arrastável
-    local buttonCorner = Instance.new("UICorner")
-    buttonCorner.CornerRadius = UDim.new(0, 10)
-    buttonCorner.Parent = button
 
     local function arrastarElemento(elemento)
         local dragging = false
