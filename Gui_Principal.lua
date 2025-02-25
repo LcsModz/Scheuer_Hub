@@ -45,11 +45,16 @@ local function criarGUI()
     local menuLateral = criarElemento("Frame", {
         Parent = frame,
         BackgroundColor3 = Color3.fromRGB(50, 50, 50), -- Tom de cinza mais escuro
-        BorderSizePixel = 0,
+        BorderSizePixel = 2,
         Position = UDim2.new(0, 0, 0, 0),
         Size = UDim2.new(0, menuLateralLargura, 1, 0),
         Name = "MenuLateral",
     })
+
+        -- Adicionar borda arredondada ao Frame secundario
+    local frameCorner = Instance.new("UICorner")
+    frameCorner.CornerRadius = UDim.new(0, 10)
+    frameCorner.Parent = menuLateral
 
     -- Opções do Menu Lateral
     local opcoes = {
