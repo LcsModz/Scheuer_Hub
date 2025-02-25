@@ -162,7 +162,7 @@ local function criarGUI()
             local transparenciaPasso = 1 / passos
 
             for i = 1, passos do
-                wait(tempoPasso)
+                wait(tempoPasso * 0.5) -- Aumenta o tempo de espera para 0.1 segundos
                 if frame.BackgroundTransparency > 0 then
                     frame.BackgroundTransparency = 1 - (i * transparenciaPasso)
                     menuLateral.BackgroundTransparency = 1 - (i * transparenciaPasso)
