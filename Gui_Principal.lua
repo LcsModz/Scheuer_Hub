@@ -103,6 +103,7 @@ local function criarGUI()
     local carregamentoGui = criarElemento("ScreenGui", {
         Parent = game.Players.LocalPlayer.PlayerGui,
         Name = "CarregamentoGUI",
+        BackgroundTransparency = 1,
     })
 
     local carregamentoFrame = criarElemento("Frame", {
@@ -110,6 +111,7 @@ local function criarGUI()
         BackgroundColor3 = Color3.fromRGB(50, 50, 50),
         BorderSizePixel = 0,
         Size = UDim2.new(1, 0, 1, 0),
+        BackgroundTransparency = 1,
     })
 
     local carregamentoTexto = criarElemento("TextLabel", {
@@ -139,8 +141,13 @@ local function criarGUI()
         Size = UDim2.new(0, 0, 1, 0),
     })
 
+    -- Animação de Entrada da GUI de Carregamento
+    local tweenInfoCarregamento = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+    local tweenCarregamento = game:GetService("TweenService"):Create(carregamentoFrame, tweenInfoCarregamento, {BackgroundTransparency = 0})
+    tweenCarregamento:Play()
+
     -- Animação de Carregamento
-    local tempoTotal = 3 -- Tempo total de carregamento (segundos)
+    local tempoTotal = 5 -- Tempo total de carregamento (segundos)
     local tempoDecorrido = 0
     local progresso = 0
 
@@ -150,14 +157,22 @@ local function criarGUI()
         progressoCarregamento.Size = UDim2.new(progresso, 0, 1, 0)
 
         if progresso == 1 then
+            -- Animação de Saída da GUI de Carregamento
+            local tweenInfoSaidaCarregamento = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+            local tweenSaidaCarregamento = game:GetService("TweenService"):Create(carregamentoFrame, tweenInfoSaidaCarregamento, {BackgroundTransparency = 1})
+            tweenSaidaCarregamento:Play()
+
+            -- Atraso antes de exibir a GUI Principal
+            wait(3)
+
             carregamentoGui:Destroy()
             frame.Visible = true
 
             -- Animação de Entrada da GUI Principal
             frame.Position = UDim2.new(0, posX, 1, posY)
-            local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
-            local tween = game:GetService("TweenService"):Create(frame, tweenInfo, {Position = UDim2.new(0, posX, 0, posY)})
-            tween:Play()
+            local tweenInfoPrincipal = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+            local tweenPrincipal = game:GetService("TweenService"):Create(frame, tweenInfoPrincipal, {Position = UDim2.new(0, posX, 0, posY)})
+            tweenPrincipal:Play()
         end
     end)
 end
