@@ -58,8 +58,8 @@ local function criarGUI()
         {nome = "Server Hop", icone = "rbxassetid://0"} -- Nova opção adicionada
     }
 
-    local alturaOpcao = 1 / #opcoes -- Altura proporcional para cada opção
-    local espacamento = 0.02 -- Espaçamento entre os botões
+    local alturaOpcao = 0.1 -- Altura fixa para cada opção (ajustada para ser menor)
+    local espacamento = 0.01 -- Espaçamento entre os botões (ajustado para ser menor)
 
     for i, opcao in ipairs(opcoes) do
         local botao = criarElemento("TextButton", {
