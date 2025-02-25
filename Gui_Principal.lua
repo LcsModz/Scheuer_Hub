@@ -67,15 +67,14 @@ local function criarGUI()
     local espacamento = 0.01 -- Espaçamento entre os botões (ajustado para ser menor)
     local margemLateral = 0.05 -- Margem lateral para os botões
     local margemTopo = 0.02 -- Margem superior para o primeiro botão
-    local margemInterna = 0.02 -- Margem interna entre os botões e as paredes da GUI lateral
 
     for i, opcao in ipairs(opcoes) do
         local botao = criarElemento("TextButton", {
             Parent = menuLateral,
             BackgroundColor3 = Color3.fromRGB(70, 70, 70),
             BorderSizePixel = 0,
-            Position = UDim2.new(0, margemInterna + margemLateral, alturaOpcao * (i - 1) + espacamento * (i - 1) + margemTopo + margemInterna, 0),
-            Size = UDim2.new(1, - (margemLateral * 2) - (margemInterna * 2), alturaOpcao - espacamento - (margemInterna * 2), 0),
+            Position = UDim2.new(0, margemLateral, alturaOpcao * (i - 1) + espacamento * (i - 1) + margemTopo, 0),
+            Size = UDim2.new(1, -margemLateral * 2, alturaOpcao - espacamento, 0),
             Font = Enum.Font.SourceSansBold,
             TextColor3 = Color3.fromRGB(255, 255, 255),
             TextSize = 14,
