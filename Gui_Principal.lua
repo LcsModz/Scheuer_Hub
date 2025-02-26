@@ -174,10 +174,41 @@ local function criarGUI()
     local margem = 10
     local alturaBotao = 30
     local espacamento = 5
-    local larguraBotao = menuLateralLargura - (margem * 2)
+    local larguraBotao = menuLateralLargura - (margem* 2)
 
     local botoesLaterais = {}
     local nomesBotoes = {"Farm", "Server Hop", "Teleport", "Raid", "Players", "Fruit"}
+
+    -- Adicionar texto inicial no retângulo amarelo
+    local textoInicial1 = criarElemento("TextLabel", {
+        Parent = frame,
+        BackgroundColor3 = Color3.new(0, 0, 0),
+        BackgroundTransparency = 1,
+        Position = UDim2.new(0.6, -150, 0.4, -25), -- Ajustado para o retângulo amarelo, movido para a direita
+        Size = UDim2.new(0, 300, 0, 50),
+        Font = Enum.Font.SourceSansBold,
+        Text = "Desenvolvido unica e exclusivamente por: LcsDevs",
+        TextColor3 = Color3.new(1, 1, 1),
+        TextScaled = true,
+        TextXAlignment = Enum.TextXAlignment.Center,
+    })
+
+    local textoInicial2 = criarElemento("TextLabel", {
+        Parent = frame,
+        BackgroundColor3 = Color3.new(0, 0, 0),
+        BackgroundTransparency = 1,
+        Position = UDim2.new(0.6, -150, 0.4, 25), -- Ajustado para o retângulo amarelo, movido para a direita
+        Size = UDim2.new(0, 300, 0, 50),
+        Font = Enum.Font.SourceSansBold,
+        Text = "Bem Vindos Scheuer Hub",
+        TextColor3 = Color3.new(1, 0, 0), -- Vermelho
+        TextStrokeColor3 = Color3.new(0, 0, 0), -- Borda preta
+        TextStrokeTransparency = 0,
+        TextScaled = true,
+        TextXAlignment = Enum.TextXAlignment.Center,
+    })
+
+    local abaAberta = nil -- Variável para rastrear a aba aberta
 
     for i, nomeBotao in ipairs(nomesBotoes) do
         local botaoLateral = criarElemento("TextButton", {
@@ -197,6 +228,64 @@ local function criarGUI()
         botaoCorner.Parent = botaoLateral
 
         table.insert(botoesLaterais, botaoLateral)
+
+        -- Adicionar funcionalidade aos botões laterais
+        botaoLateral.MouseButton1Click:Connect(function()
+            if abaAberta then
+                abaAberta:Destroy() -- Fecha a aba aberta anteriormente
+            end
+
+            -- Criar nova GUI dentro do retângulo verde com margem de 10 pixels
+            local novaFrame = criarElemento("Frame", {
+                Parent = frame,
+                BackgroundColor3 = Color3.fromRGB(80, 80, 80), -- Cor de fundo diferente
+                BorderSizePixel = 0,
+                Position = UDim2.new(0.22, 10, 0.03, 10), -- Ajustado para o retângulo verde com margem
+                Size = UDim2.new(0.77, -20, 0.95, -20), -- Ajustado para o retângulo verde com margem
+            })
+
+            local novaFrameCorner = Instance.new("UICorner")
+            novaFrameCorner.CornerRadius = UDim.new(0, 10)
+            novaFrameCorner.Parent = novaFrame
+
+            -- Adicionar um botão de fechar
+            local botaoFechar = criarElemento("TextButton", {
+                Parent = novaFrame,
+                BackgroundColor3 = Color3.fromRGB(200, 0, 0), -- Vermelho
+                Size = UDim2.new(0, 30, 0, 30),
+                Position = UDim2.new(1, -35, 0, 5),
+                Text = "X",
+                TextColor3 = Color3.new(1, 1, 1),
+                Font = Enum.Font.SourceSansBold,
+                BorderSizePixel = 0,
+            })
+
+            local botaoFecharCorner = Instance.new("UICorner")
+            botaoFecharCorner.CornerRadius = UDim.new(0, 15)
+            botaoFecharCorner.Parent = botaoFechar
+
+            botaoFechar.MouseButton1Click:Connect(function()
+                novaFrame:Destroy()
+                abaAberta = nil -- Limpa a variável de aba aberta
+            end)
+
+            -- Adicionar conteúdo específico para cada botão (opcional)
+            local conteudo = criarElemento("TextLabel", {
+                Parent = novaFrame,
+                BackgroundColor3 = Color3.new(0, 0, 0),
+                BackgroundTransparency = 1,
+                Size = UDim2.new(1, 0, 1, 0),
+                Font = Enum.Font.SourceSansBold,
+                Text = "Conteúdo do botão " .. nomeBotao,
+                TextColor3 = Color3.new(1, 1, 1),
+                TextScaled = true,
+                TextXAlignment = Enum.TextXAlignment.Center,
+                TextYAlignment = Enum.TextYAlignment.Center,
+            })
+
+            abaAberta = novaFrame -- Define a aba aberta
+
+        end)
     end
 end
 
