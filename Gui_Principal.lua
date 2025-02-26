@@ -64,7 +64,7 @@ local function criarGUI()
         Parent = ScreenGuiBotao,
         BackgroundTransparency = 0,
         Size = UDim2.new(0, 30, 0, 30), -- Aumenta o tamanho do botão
-        Position = UDim2.new(0, frame.Position.X.Offset - 25, 0.5, -15), -- Ajusta a posição do botão
+        Position = UDim2.new(0, frame.Position.X.Offset - 35, 0.5, -15), -- Ajusta a posição do botão
         Text = "",
         Draggable = true,
         Name = "BotaoImagem",
@@ -169,6 +169,35 @@ local function criarGUI()
             tweenMenuLateral:Play()
         end
     end)
+
+    -- Adicionando botões laterais
+    local margem = 10
+    local alturaBotao = 30
+    local espacamento = 5
+    local larguraBotao = menuLateralLargura - (margem * 2)
+
+    local botoesLaterais = {}
+    local nomesBotoes = {"Farm", "Server Hop", "Teleport", "Raid", "Players", "Fruit"}
+
+    for i, nomeBotao in ipairs(nomesBotoes) do
+        local botaoLateral = criarElemento("TextButton", {
+            Parent = menuLateral,
+            BackgroundColor3 = Color3.fromRGB(135, 206, 250), -- Azul claro
+            Size = UDim2.new(0, larguraBotao, 0, alturaBotao),
+            Position = UDim2.new(0, margem, 0, margem + ((alturaBotao + espacamento) * (i - 1))),
+            Text = nomeBotao,
+            TextColor3 = Color3.new(1, 1, 1), -- Branco
+            TextScaled = true,
+            BorderSizePixel = 2,
+            BorderColor3 = Color3.fromRGB(255, 0, 0), -- Vermelho
+        })
+
+        local botaoCorner = Instance.new("UICorner")
+        botaoCorner.CornerRadius = UDim.new(0, 10)
+        botaoCorner.Parent = botaoLateral
+
+        table.insert(botoesLaterais, botaoLateral)
+    end
 end
 
 -- Chamar a função para criar a GUI
