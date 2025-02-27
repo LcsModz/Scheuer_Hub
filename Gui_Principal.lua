@@ -174,7 +174,7 @@ local function criarGUI()
     local margem = 10
     local alturaBotao = 30
     local espacamento = 5
-    local larguraBotao = menuLateralLargura - (margem* 2)
+    local larguraBotao = menuLateralLargura - (margem * 2)
 
     local botoesLaterais = {}
     local nomesBotoes = {"Farm", "Server Hop", "Teleport", "Raid", "Players", "Fruit"}
@@ -269,22 +269,207 @@ local function criarGUI()
                 abaAberta = nil -- Limpa a variável de aba aberta
             end)
 
-            -- Adicionar conteúdo específico para cada botão (opcional)
-            local conteudo = criarElemento("TextLabel", {
-                Parent = novaFrame,
-                BackgroundColor3 = Color3.new(0, 0, 0),
-                BackgroundTransparency = 1,
-                Size = UDim2.new(1, 0, 1, 0),
-                Font = Enum.Font.SourceSansBold,
-                Text = "Conteúdo do botão " .. nomeBotao,
-                TextColor3 = Color3.new(1, 1, 1),
-                TextScaled = true,
-                TextXAlignment = Enum.TextXAlignment.Center,
-                TextYAlignment = Enum.TextYAlignment.Center,
-            })
+            -- Remover o texto de fundo
+            -- local conteudo = criarElemento("TextLabel", {
+            --     Parent = novaFrame,
+            --     BackgroundColor3 = Color3.new(0, 0, 0),
+            --     BackgroundTransparency = 1,
+            --     Size = UDim2.new(1, 0, 1, 0),
+            --     Font = Enum.Font.SourceSansBold,
+            --     Text = "Conteúdo do botão " .. nomeBotao,
+            --     TextColor3 = Color3.new(1, 1, 1),
+            --     TextScaled = true,
+            --     TextXAlignment = Enum.TextXAlignment.Center,
+            --     TextYAlignment = Enum.TextYAlignment.Center,
+            -- })
 
             abaAberta = novaFrame -- Define a aba aberta
 
+            -- Adicionar botões de teleporte para Sea 1, 2 e 3
+            if nomeBotao == "Teleport" then
+                local botaoSea1 = criarElemento("TextButton", {
+                    Parent = novaFrame,
+                    BackgroundColor3 = Color3.fromRGB(135, 206, 250),
+                    Size = UDim2.new(0, 150, 0, 30),
+                    Position = UDim2.new(0, (novaFrame.AbsoluteSize.X - 150) / 2, 0, 50), -- Centralizado horizontalmente
+                    Text = "Ir para o Mar 1",
+                    TextColor3 = Color3.new(1, 1, 1),
+                    TextScaled = true,
+                    BorderSizePixel = 2,
+                    BorderColor3 = Color3.fromRGB(255, 0, 0),
+                })
+
+                local botaoSea2 = criarElemento("TextButton", {
+                    Parent = novaFrame,
+                    BackgroundColor3 = Color3.fromRGB(135, 206, 250),
+                    Size = UDim2.new(0, 150, 0, 30),
+                    Position = UDim2.new(0, (novaFrame.AbsoluteSize.X - 150) / 2, 0, 90), -- Centralizado horizontalmente
+                    Text = "Ir para o Mar 2",
+                    TextColor3 = Color3.new(1, 1, 1),
+                    TextScaled = true,
+                    BorderSizePixel = 2,
+                    BorderColor3 = Color3.fromRGB(255, 0, 0),
+                })
+
+                local botaoSea3 = criarElemento("TextButton", {
+                    Parent = novaFrame,
+                    BackgroundColor3 = Color3.fromRGB(135, 206, 250),
+                    Size = UDim2.new(0, 150, 0, 30),
+                    Position = UDim2.new(0, (novaFrame.AbsoluteSize.X - 150) / 2, 0, 130), -- Centralizado horizontalmente
+                    Text = "Ir para o Mar 3",
+                    TextColor3 = Color3.new(1, 1, 1),
+                    TextScaled = true,
+                    BorderSizePixel = 2,
+                    BorderColor3 = Color3.fromRGB(255, 0, 0),
+                })
+
+                -- Adicionar menu de seleção de ilhas
+                local botaoTeleportar = criarElemento("TextButton", {
+                    Parent = novaFrame,
+                    BackgroundColor3 = Color3.fromRGB(135, 206, 250),
+                    Size = UDim2.new(0, 150, 0, 30),
+                    Position = UDim2.new(0, (novaFrame.AbsoluteSize.X - 320) / 2, 0, 170), -- Ajustado para centralizar
+                    Text = "Teleportar para:",
+                    TextColor3 = Color3.new(1, 1, 1),
+                    TextScaled = true,
+                    BorderSizePixel = 2,
+                    BorderColor3 = Color3.fromRGB(255, 0, 0),
+                })
+
+                local botaoSelecionarIlha = criarElemento("TextButton", {
+                    Parent = novaFrame,
+                    BackgroundColor3 = Color3.fromRGB(135, 206, 250),
+                    Size = UDim2.new(0, 150, 0, 30),
+                    Position = UDim2.new(0, (novaFrame.AbsoluteSize.X + 20) / 2, 0, 170), -- Ajustado para centralizar e ficar ao lado do botão Teleportar
+                    Text = "...",
+                    TextColor3 = Color3.new(1, 1, 1),
+                    TextScaled = true,
+                    BorderSizePixel = 2,
+                    BorderColor3 = Color3.fromRGB(255, 0, 0),
+                })
+
+                local menuIlhas = criarElemento("Frame", {
+                    Parent = novaFrame,
+                    BackgroundColor3 = Color3.fromRGB(80, 80, 80),
+                    BorderSizePixel = 1,
+                    BorderColor3 = Color3.fromRGB(200, 200, 200),
+                    Position = UDim2.new(0, (novaFrame.AbsoluteSize.X - 150) / 2, 0, 210), -- Centralizado horizontalmente
+                    Size = UDim2.new(0, 150, 0, 0), -- Altura inicial 0
+                    Visible = false,
+                })
+
+                local ilhas = {"Café", "Mansão", "Green Zone"}
+                local botoesIlhas = {}
+                local ilhaSelecionada = nil
+
+                for i, ilha in ipairs(ilhas) do
+                    local botaoIlha = criarElemento("TextButton", {
+                        Parent = menuIlhas,
+                        BackgroundColor3 = Color3.fromRGB(135, 206, 250),
+                        Size = UDim2.new(1, 0, 0, 30),
+                        Position = UDim2.new(0, 0, 0, (i - 1) * 30),
+                        Text = ilha,
+                        TextColor3 = Color3.new(1, 1, 1),
+                        TextScaled = true,
+                        BorderSizePixel = 1,
+                        BorderColor3 = Color3.fromRGB(255, 0, 0),
+                    })
+
+                    botaoIlha.MouseButton1Click:Connect(function()
+                        ilhaSelecionada = ilha
+                        botaoSelecionarIlha.Text = ilha
+                        menuIlhas.Visible = false
+                        menuIlhas.Size = UDim2.new(0, 150, 0, 0)
+                    end)
+
+                    table.insert(botoesIlhas, botaoIlha)
+                end
+
+                botaoSelecionarIlha.MouseButton1Click:Connect(function()
+                    menuIlhas.Visible = not menuIlhas.Visible
+                    if menuIlhas.Visible then
+                        menuIlhas.Size = UDim2.new(0, 150, 0, #ilhas * 30)
+                    else
+                        menuIlhas.Size = UDim2.new(0, 150, 0, 0)
+                    end
+                end)
+
+                botaoTeleportar.MouseButton1Click:Connect(function()
+                    if ilhaSelecionada then
+                        if ilhaSelecionada == "Café" then
+                            local player = game.Players.LocalPlayer
+                            local character = player.Character
+                            local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+
+                            if character and humanoidRootPart then
+                                local targetPosition = Vector3.new(-382.072509765625, 73.06132507324219, 356.9813537597656)
+                                local alturaFixa = 250
+                                local speed = 200
+
+                                -- Guarda o estado de colisão original das partes do personagem
+                                local originalCollisionStates = {}
+                                for _, part in ipairs(character:GetDescendants()) do
+                                    if part:IsA("BasePart") then
+                                        originalCollisionStates[part] = part.CanCollide
+                                        part.CanCollide = false
+                                    end
+                                end
+
+                                -- Teleporta para a altura fixa
+                                humanoidRootPart.CFrame = CFrame.new(humanoidRootPart.Position.X, alturaFixa, humanoidRootPart.Position.Z)
+                                humanoidRootPart.Velocity = Vector3.new(0, 0, 0) -- zera a velocidade para prevenir queda
+
+                                local direction = (Vector3.new(targetPosition.X, alturaFixa, targetPosition.Z) - humanoidRootPart.Position).Unit
+                                local distance = (Vector3.new(targetPosition.X, alturaFixa, targetPosition.Z) - humanoidRootPart.Position).Magnitude
+
+                                local connection
+                                connection = game:GetService("RunService").Heartbeat:Connect(function(deltaTime)
+                                    if distance > 0 then
+                                        local moveDistance = math.min(speed * deltaTime, distance)
+                                        humanoidRootPart.CFrame = humanoidRootPart.CFrame + direction * moveDistance
+                                        distance = distance - moveDistance
+                                        humanoidRootPart.Velocity = Vector3.new(0, 0, 0) -- mantém a velocidade zerada
+                                    else
+                                        connection:Disconnect()
+
+                                        -- Teleporte instantâneo para a posição final
+                                        humanoidRootPart.CFrame = CFrame.new(targetPosition)
+
+                                        -- Restaura o estado de colisão original das partes do personagem
+                                        for part, canCollide in pairs(originalCollisionStates) do
+                                            if part and part.Parent == character then
+                                                part.CanCollide = canCollide
+                                            end
+                                        end
+                                    end
+                                end)
+                            end
+                        elseif ilhaSelecionada == "Mansão" then
+                            -- Adicione aqui o código para teleporte para a Mansão
+                            print("Teleportando para a Mansão")
+                        elseif ilhaSelecionada == "Green Zone" then
+                            -- Adicione aqui o código para teleporte para a Green Zone
+                            print("Teleportando para a Green Zone")
+                        end
+                    end
+                end)
+
+                -- Adicionar funcionalidade aos botões de teleporte para Sea 1, 2 e 3
+                botaoSea1.MouseButton1Click:Connect(function()
+                    -- Adicione aqui o código para teleporte para o Sea 1
+                    print("Teleportando para o Sea 1")
+                end)
+
+                botaoSea2.MouseButton1Click:Connect(function()
+                    -- Adicione aqui o código para teleporte para o Sea 2
+                    print("Teleportando para o Sea 2")
+                end)
+
+                botaoSea3.MouseButton1Click:Connect(function()
+                    -- Adicione aqui o código para teleporte para o Sea 3
+                    print("Teleportando para o Sea 3")
+                end)
+            end
         end)
     end
 end
